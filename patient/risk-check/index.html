@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿尔茨海默症患病风险自查</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <h2>评估进度</h2>
+            <hr>
+            <ul class="step-list" id="sidebar-steps">
+                <li class="step-item active" data-step="0">首页</li>
+                <li class="step-item" data-step="1">基本信息</li>
+                <li class="step-item" data-step="2">症状自评</li>
+                <li class="step-item" data-step="3">认知测试</li>
+                <li class="step-item" data-step="4">生活方式</li>
+                <li class="step-item" data-step="5">评估结果</li>
+            </ul>
+            <hr>
+            <p class="progress-text">当前进度：<span id="progress-num">0</span>/5</p>
+            <hr>
+            <p class="footer-text">医学信息实习 E组</p>
+            <p class="footer-text">阿尔茨海默症风险评估模块</p>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 步骤0：首页 -->
+            <div class="step active" id="step-0">
+                <h1>阿尔茨海默症风险自评系统</h1>
+                <hr>
+                <div class="welcome-row">
+                    <div class="welcome-col-left">
+                        <h3>系统介绍</h3>
+                        <p>本系统基于AD8、MMSE、MoCA等经典认知评估量表，结合国内外阿尔茨海默症风险评估研究成果，通过科学的多维度问卷评估，帮助您了解自身阿尔茨海默症的患病风险。</p>
+                        <p>评估包含以下几个部分：</p>
+                        <ol>
+                            <li>基本信息采集（人口统计学、病史、家族史）</li>
+                            <li>多维度症状自评（记忆、语言、执行、视空间等）</li>
+                            <li>认知功能小测试（瞬时记忆、注意力、语言流畅性等）</li>
+                            <li>生活方式评估（饮食、运动、睡眠、社交等）</li>
+                            <li>个性化评估报告与就医建议</li>
+                        </ol>
+                        <div class="info-box">预计用时：10-15分钟 | 共73道题目</div>
+                        <div class="warning-box">
+                            <strong>免责声明：</strong>本评估仅供健康参考，不能替代专业医生诊断。如有疑虑或症状明显，请及时到正规医院神经内科或记忆门诊就诊。
+                        </div>
+                    </div>
+                    <div class="welcome-col-right">
+                        <h3>评估流程</h3>
+                        <p>基本信息 → 症状自评 → 认知测试</p>
+                        <p style="text-align: center;">↓</p>
+                        <p>生活方式 ← 生成报告</p>
+                        <hr>
+                        <h3>评估维度</h3>
+                        <ul class="dimension-list">
+                            <li>人口统计学与家族史</li>
+                            <li>记忆功能评估</li>
+                            <li>其他认知域评估</li>
+                            <li>日常生活能力</li>
+                            <li>精神行为症状</li>
+                            <li>认知筛查测试</li>
+                            <li>生活方式危险因素</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <label class="agree-label">
+                    <input type="checkbox" id="agree-check">
+                    我已阅读并同意使用条款和隐私政策
+                </label>
+                <div class="btn-center">
+                    <button id="start-btn" class="btn btn-primary" disabled>开始评估</button>
+                </div>
+            </div>
+
+            <!-- 步骤1：基本信息 -->
+            <div class="step" id="step-1">
+                <h1>第一步：基本信息</h1>
+                <div class="progress-bar"><div class="progress-fill" style="width: 20%"></div></div>
+                <hr>
+
+                <h3>人口统计学信息</h3>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>您的年龄：<span id="age-value">65</span>岁</label>
+                            <input type="range" id="age" min="40" max="100" value="65" class="slider">
+                        </div>
+                        <div class="form-group">
+                            <label>您的性别</label>
+                            <div class="radio-group horizontal">
+                                <label><input type="radio" name="gender" value="男"> 男</label>
+                                <label><input type="radio" name="gender" value="女"> 女</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>最高文化程度</label>
+                            <select id="education" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="文盲/小学未毕业">文盲/小学未毕业</option>
+                                <option value="小学毕业">小学毕业</option>
+                                <option value="初中毕业">初中毕业</option>
+                                <option value="高中/中专毕业">高中/中专毕业</option>
+                                <option value="大专/本科">大专/本科</option>
+                                <option value="硕士及以上">硕士及以上</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>退休前主要职业类型</label>
+                            <select id="occupation" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="体力劳动为主">体力劳动为主</option>
+                                <option value="半体力半脑力">半体力半脑力</option>
+                                <option value="脑力劳动为主">脑力劳动为主</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>婚姻状况</label>
+                            <select id="marital" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="已婚，与配偶同住">已婚，与配偶同住</option>
+                                <option value="已婚，配偶不在身边">已婚，配偶不在身边</option>
+                                <option value="丧偶">丧偶</option>
+                                <option value="离异/分居">离异/分居</option>
+                                <option value="未婚">未婚</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>居住方式</label>
+                            <select id="living" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="与家人同住">与家人同住</option>
+                                <option value="独居，子女经常探望">独居，子女经常探望</option>
+                                <option value="独居，子女很少探望">独居，子女很少探望</option>
+                                <option value="养老院/养老机构">养老院/养老机构</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <h3>病史与家族史</h3>
+                <div class="form-group">
+                    <label>直系亲属中是否有人患阿尔茨海默症/痴呆？</label>
+                    <div class="radio-group horizontal" id="family-history-group">
+                        <label><input type="radio" name="family_history" value="请选择" checked> 请选择</label>
+                        <label><input type="radio" name="family_history" value="没有"> 没有</label>
+                        <label><input type="radio" name="family_history" value="有1位二级亲属"> 有1位二级亲属</label>
+                        <label><input type="radio" name="family_history" value="有1位一级亲属"> 有1位一级亲属</label>
+                        <label><input type="radio" name="family_history" value="有2位及以上一级亲属"> 有2位及以上一级亲属</label>
+                    </div>
+                    <small class="help-text">一级亲属：父母、兄弟姐妹、子女；二级亲属：祖父母、外祖父母、叔伯姑舅姨</small>
+                </div>
+
+                <div class="form-group" id="apoe-group" style="display: none;">
+                    <label>您是否做过APOE基因检测？</label>
+                    <select id="apoe" class="form-select">
+                        <option value="">请选择</option>
+                        <option value="没做过/不清楚">没做过/不清楚</option>
+                        <option value="没有携带APOEε4">没有携带APOEε4</option>
+                        <option value="携带1个APOEε4">携带1个APOEε4</option>
+                        <option value="携带2个APOEε4">携带2个APOEε4</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>高血压病史</label>
+                            <select id="hypertension" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有，控制良好">有，控制良好</option>
+                                <option value="有，控制不佳">有，控制不佳</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>糖尿病病史</label>
+                            <select id="diabetes" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有，控制良好">有，控制良好</option>
+                                <option value="有，控制不佳">有，控制不佳</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>脑卒中病史</label>
+                            <select id="stroke" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有过1次">有过1次</option>
+                                <option value="有过2次及以上">有过2次及以上</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>高血脂病史</label>
+                            <select id="hyperlipidemia" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有，控制良好">有，控制良好</option>
+                                <option value="有，控制不佳">有，控制不佳</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>抑郁症病史</label>
+                            <select id="depression" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="曾经有过">曾经有过</option>
+                                <option value="目前仍有">目前仍有</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>头部外伤史</label>
+                            <select id="head_injury" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有，未失去意识">有，未失去意识</option>
+                                <option value="有，失去意识<30分钟">有，失去意识<30分钟</option>
+                                <option value="有，失去意识>30分钟">有，失去意识>30分钟</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>甲状腺疾病</label>
+                            <select id="thyroid" class="form-select">
+                                <option value="">请选择</option>
+                                <option value="没有">没有</option>
+                                <option value="有，已控制">有，已控制</option>
+                                <option value="有，未控制">有，未控制</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <h3>用药史</h3>
+                <div class="form-group">
+                    <label>您是否长期服用以下药物？（可多选）</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="medications" value="抗胆碱能药物"> 抗胆碱能药物</label>
+                        <label><input type="checkbox" name="medications" value="苯二氮䓬类镇静催眠药"> 苯二氮䓬类镇静催眠药</label>
+                        <label><input type="checkbox" name="medications" value="抗精神病药物"> 抗精神病药物</label>
+                        <label><input type="checkbox" name="medications" value="长期服用止痛药"> 长期服用止痛药</label>
+                        <label><input type="checkbox" name="medications" value="以上都没有"> 以上都没有</label>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="nav-buttons">
+                    <button class="btn btn-default" onclick="goToStep(0)">返回首页</button>
+                    <button class="btn btn-primary" onclick="nextStepFromBasic()">下一步</button>
+                </div>
+                <div id="basic-error" class="error-box" style="display: none;"></div>
+            </div>
+
+            <!-- 步骤2：症状自评 -->
+            <div class="step" id="step-2">
+                <h1>第二步：症状自评</h1>
+                <div class="progress-bar"><div class="progress-fill" style="width: 40%"></div></div>
+                <hr>
+                <div class="info-box">请根据您最近一年的情况，与自己以前相比是否有变化，选择最符合的选项。</div>
+
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="memory">记忆功能</button>
+                    <button class="tab-btn" data-tab="language">语言功能</button>
+                    <button class="tab-btn" data-tab="exec">执行功能</button>
+                    <button class="tab-btn" data-tab="spatial">视空间功能</button>
+                    <button class="tab-btn" data-tab="daily">日常生活</button>
+                    <button class="tab-btn" data-tab="mental">精神行为</button>
+                </div>
+
+                <div class="tab-content active" id="tab-memory">
+                    <h3>记忆功能评估（8题）</h3>
+                    <div id="memory-questions"></div>
+                </div>
+                <div class="tab-content" id="tab-language">
+                    <h3>语言功能评估（5题）</h3>
+                    <div id="language-questions"></div>
+                </div>
+                <div class="tab-content" id="tab-exec">
+                    <h3>执行功能评估（5题）</h3>
+                    <div id="exec-questions"></div>
+                </div>
+                <div class="tab-content" id="tab-spatial">
+                    <h3>视空间功能评估（4题）</h3>
+                    <div id="spatial-questions"></div>
+                </div>
+                <div class="tab-content" id="tab-daily">
+                    <h3>日常生活能力评估（10题）</h3>
+                    <h4>基本日常生活能力（ADL）</h4>
+                    <div id="adl-questions"></div>
+                    <hr>
+                    <h4>工具性日常生活能力（IADL）</h4>
+                    <div id="iadl-questions"></div>
+                </div>
+                <div class="tab-content" id="tab-mental">
+                    <h3>精神行为症状评估（6题）</h3>
+                    <div id="bpsd-questions"></div>
+                </div>
+
+                <hr>
+                <p class="progress-caption">已完成：<span id="symptom-answered">0</span> / 38 题</p>
+                <div class="nav-buttons">
+                    <button class="btn btn-default" onclick="goToStep(1)">上一步</button>
+                    <button class="btn btn-primary" onclick="nextStepFromSymptom()">下一步</button>
+                </div>
+                <div id="symptom-error" class="error-box" style="display: none;"></div>
+            </div>
+
+            <!-- 步骤3：认知测试 -->
+            <div class="step" id="step-3">
+                <h1>第三步：认知功能小测试</h1>
+                <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+                <hr>
+                <div class="info-box">接下来我们做几个简单的认知小测试，请认真完成。</div>
+
+                <div class="progress-bar sub-progress">
+                    <div id="cognitive-progress-fill" class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p class="progress-caption">当前测试：<span id="current-test-name">瞬时记忆</span></p>
+
+                <div class="test-step active" id="test-0">
+                    <h3>测试1：瞬时记忆</h3>
+                    <p>请记住以下3个词语，稍后我们会让您回忆。</p>
+                    <div class="memory-words-row">
+                        <div class="word-card">皮球</div>
+                        <div class="word-card">国旗</div>
+                        <div class="word-card">树木</div>
+                    </div>
+                    <button id="memory-confirm-btn" class="btn btn-primary" onclick="confirmMemory()">我记住了，继续</button>
+                    <div id="memory-success" style="display: none;" class="success-box">好的，请继续完成后面的测试，稍后会让您回忆这三个词</div>
+                    <button id="memory-next-btn" style="display: none;" class="btn btn-primary" onclick="nextTestStep()">进入下一个测试</button>
+                </div>
+
+                <div class="test-step" id="test-1">
+                    <h3>测试2：注意力与计算</h3>
+                    <h4>连续减7：请计算 100 连续减 7，依次写出5个结果</h4>
+                    <div class="num-input-row">
+                        <input type="number" id="sub7_1" min="0" max="200" class="num-input" placeholder="第1个">
+                        <input type="number" id="sub7_2" min="0" max="200" class="num-input" placeholder="第2个">
+                        <input type="number" id="sub7_3" min="0" max="200" class="num-input" placeholder="第3个">
+                        <input type="number" id="sub7_4" min="0" max="200" class="num-input" placeholder="第4个">
+                        <input type="number" id="sub7_5" min="0" max="200" class="num-input" placeholder="第5个">
+                    </div>
+                    <hr>
+                    <h4>倒背数字：请将数字倒着写出来</h4>
+                    <div class="form-group">
+                        <label>第1题：742 → ?</label>
+                        <input type="text" id="reverse_1" class="form-input" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>第2题：3851 → ?</label>
+                        <input type="text" id="reverse_2" class="form-input" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>第3题：69248 → ?</label>
+                        <input type="text" id="reverse_3" class="form-input" maxlength="10">
+                    </div>
+                    <button class="btn btn-primary" onclick="submitAttentionTest()">提交并进入下一个测试</button>
+                </div>
+
+                <div class="test-step" id="test-2">
+                    <h3>测试3：语言流畅性</h3>
+                    <p>请在60秒内输入尽可能多的动物名称，用逗号或空格分隔。</p>
+                    <textarea id="animals_input" class="form-textarea" rows="4" placeholder="例如：猫, 狗, 老虎, 狮子..."></textarea>
+                    <div class="form-group">
+                        <label>用时（秒）</label>
+                        <input type="number" id="time_used" min="0" max="120" value="60" class="form-input small">
+                    </div>
+                    <button class="btn btn-primary" onclick="submitFluencyTest()">提交答案</button>
+                </div>
+
+               <div class="test-step" id="test-3">
+    <h3>测试4：视空间与定向能力</h3>
+    <p>请根据题目描述，选择最恰当的答案。</p>
+
+    <h4>第1题：方位判断</h4>
+    <p>您站在自家客厅正中间，面朝大门（朝南）。已知您的左手边是厨房，右手边是卧室。
+       请问您转过身去（面朝北）时，您的左手边是什么房间？</p>
+    <div class="radio-group">
+        <label><input type="radio" name="spatial_q1" value="A"> A. 厨房</label>
+        <label><input type="radio" name="spatial_q1" value="B"> B. 卧室</label>
+        <label><input type="radio" name="spatial_q1" value="C"> C. 大门</label>
+        <label><input type="radio" name="spatial_q1" value="D"> D. 阳台</label>
+    </div>
+
+    <hr>
+    <h4>第2题：时间与路径推算</h4>
+    <p>您从家出发去超市，去程需要步行15分钟。超市购物需要20分钟，回家路上比去程多花5分钟。
+       如果您上午10点整从家里出发，请问您大约几点能回到家？</p>
+    <div class="radio-group">
+        <label><input type="radio" name="clock_q1" value="A"> A. 10点35分</label>
+        <label><input type="radio" name="clock_q1" value="B"> B. 10点50分</label>
+        <label><input type="radio" name="clock_q1" value="C"> C. 10点45分</label>
+        <label><input type="radio" name="clock_q1" value="D"> D. 11点整</label>
+    </div>
+
+    <button class="btn btn-primary" onclick="submitSpatialTest()">提交并进入下一个测试</button>
+    <div id="spatial-error" class="error-box" style="display: none;"></div>
+</div>
+
+                <div class="test-step" id="test-4">
+                    <h3>测试5：定向力测试</h3>
+                    <h4>回忆测试：请写出刚才让您记住的3个词语：</h4>
+                    <div class="num-input-row">
+                        <input type="text" id="recall_1" class="form-input" placeholder="第1个词">
+                        <input type="text" id="recall_2" class="form-input" placeholder="第2个词">
+                        <input type="text" id="recall_3" class="form-input" placeholder="第3个词">
+                    </div>
+                    <hr>
+                    <h4>定向力问题：</h4>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>今年是哪一年？</label>
+                                <input type="number" id="year" min="1900" max="2100" value="2026" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>今天是几月？</label>
+                                <input type="number" id="month" min="1" max="12" value="7" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>今天是几号？</label>
+                                <input type="number" id="day" min="1" max="31" value="6" class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label>今天是星期几？</label>
+                                <select id="weekday" class="form-select">
+                                    <option value="">请选择</option>
+                                    <option value="星期一">星期一</option>
+                                    <option value="星期二">星期二</option>
+                                    <option value="星期三">星期三</option>
+                                    <option value="星期四">星期四</option>
+                                    <option value="星期五">星期五</option>
+                                    <option value="星期六">星期六</option>
+                                    <option value="星期日">星期日</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>现在是什么季节？</label>
+                                <select id="season" class="form-select">
+                                    <option value="">请选择</option>
+                                    <option value="春季">春季</option>
+                                    <option value="夏季">夏季</option>
+                                    <option value="秋季">秋季</option>
+                                    <option value="冬季">冬季</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>我们国家的首都是哪里？</label>
+                                <input type="text" id="capital" class="form-input">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="submitOrientationTest()">提交所有测试</button>
+                    <div id="orientation-error" class="error-box" style="display: none;"></div>
+                </div>
+
+                <div class="test-step" id="test-5">
+                    <div class="success-box">认知测试完成！</div>
+                    <p>您的认知测试得分：<span id="cognitive-total-score">0</span> / 20分</p>
+                    <div class="info-box">接下来我们继续完成生活方式评估。</div>
+                    <button class="btn btn-primary" onclick="goToStep(4)">继续</button>
+                </div>
+
+                <hr>
+                <div class="nav-buttons">
+                    <button class="btn btn-default" onclick="backFromCognitive()">上一步</button>
+                </div>
+            </div>
+
+            <!-- 步骤4：生活方式 -->
+            <div class="step" id="step-4">
+                <h1>第四步：生活方式评估</h1>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%"></div></div>
+                <hr>
+                <div class="info-box">请根据您的实际情况选择，这些因素会影响阿尔茨海默症的患病风险。</div>
+
+                <div class="expander active">
+                    <div class="expander-header" onclick="toggleExpander(this)">
+                        <span>饮食模式</span>
+                        <span class="expander-icon">−</span>
+                    </div>
+                    <div class="expander-content">
+                        <div class="form-group">
+                            <label>每周吃鱼类/海鲜的频率</label>
+                            <select id="fish" class="form-select wide">
+                                <option value="几乎每天">几乎每天</option>
+                                <option value="每周3-4次">每周3-4次</option>
+                                <option value="每周1-2次" selected>每周1-2次</option>
+                                <option value="每月1-2次">每月1-2次</option>
+                                <option value="很少或从不吃">很少或从不吃</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>每天吃蔬菜水果的量</label>
+                            <select id="veggie" class="form-select wide">
+                                <option value="500克以上">500克以上</option>
+                                <option value="300-500克" selected>300-500克</option>
+                                <option value="200-300克">200-300克</option>
+                                <option value="200克以下">200克以下</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>吃高糖、高脂、油炸食品的频率</label>
+                            <select id="junk_food" class="form-select wide">
+                                <option value="很少或从不吃">很少或从不吃</option>
+                                <option value="每月1-2次">每月1-2次</option>
+                                <option value="每周1-2次" selected>每周1-2次</option>
+                                <option value="几乎每天">几乎每天</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expander">
+                    <div class="expander-header" onclick="toggleExpander(this)">
+                        <span>运动习惯</span>
+                        <span class="expander-icon">+</span>
+                    </div>
+                    <div class="expander-content">
+                        <div class="form-group">
+                            <label>每周中等强度运动情况</label>
+                            <select id="exercise" class="form-select wide">
+                                <option value="每周5次以上">每周5次以上</option>
+                                <option value="每周3-4次" selected>每周3-4次</option>
+                                <option value="每周1-2次">每周1-2次</option>
+                                <option value="很少运动">很少运动</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>每天坐着的时间</label>
+                            <select id="sitting" class="form-select wide">
+                                <option value="4小时以下">4小时以下</option>
+                                <option value="4-6小时">4-6小时</option>
+                                <option value="6-8小时" selected>6-8小时</option>
+                                <option value="8小时以上">8小时以上</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expander">
+                    <div class="expander-header" onclick="toggleExpander(this)">
+                        <span>睡眠情况</span>
+                        <span class="expander-icon">+</span>
+                    </div>
+                    <div class="expander-content">
+                        <div class="form-group">
+                            <label>平均每天睡眠时间</label>
+                            <select id="sleep_hours" class="form-select wide">
+                                <option value="7-8小时" selected>7-8小时</option>
+                                <option value="6-7小时/8-9小时">6-7小时/8-9小时</option>
+                                <option value="5-6小时/9-10小时">5-6小时/9-10小时</option>
+                                <option value="5小时以下/10小时以上">5小时以下/10小时以上</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>失眠情况</label>
+                            <select id="insomnia" class="form-select wide">
+                                <option value="没有">没有</option>
+                                <option value="偶尔" selected>偶尔</option>
+                                <option value="经常">经常</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>打鼾/睡眠呼吸暂停</label>
+                            <select id="sleep_apnea" class="form-select wide">
+                                <option value="没有" selected>没有</option>
+                                <option value="有一点">有一点</option>
+                                <option value="很严重/有呼吸暂停">很严重/有呼吸暂停</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expander">
+                    <div class="expander-header" onclick="toggleExpander(this)">
+                        <span>社交与认知活动</span>
+                        <span class="expander-icon">+</span>
+                    </div>
+                    <div class="expander-content">
+                        <div class="form-group">
+                            <label>每周社交活动频率</label>
+                            <select id="social" class="form-select wide">
+                                <option value="每周3次以上">每周3次以上</option>
+                                <option value="每周1-2次" selected>每周1-2次</option>
+                                <option value="每月1-2次">每月1-2次</option>
+                                <option value="很少或几乎没有">很少或几乎没有</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>脑力活动频率</label>
+                            <select id="mental" class="form-select wide">
+                                <option value="几乎每天">几乎每天</option>
+                                <option value="每周3-4次" selected>每周3-4次</option>
+                                <option value="每周1-2次">每周1-2次</option>
+                                <option value="很少或几乎没有">很少或几乎没有</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expander">
+                    <div class="expander-header" onclick="toggleExpander(this)">
+                        <span>不良生活习惯</span>
+                        <span class="expander-icon">+</span>
+                    </div>
+                    <div class="expander-content">
+                        <div class="form-group">
+                            <label>吸烟情况</label>
+                            <select id="smoking" class="form-select wide">
+                                <option value="从不吸烟" selected>从不吸烟</option>
+                                <option value="已戒烟5年以上">已戒烟5年以上</option>
+                                <option value="已戒烟不足5年">已戒烟不足5年</option>
+                                <option value="目前仍吸烟（每天少于10支）">目前仍吸烟（每天少于10支）</option>
+                                <option value="目前仍吸烟（每天10支以上）">目前仍吸烟（每天10支以上）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>饮酒情况</label>
+                            <select id="drinking" class="form-select wide">
+                                <option value="从不饮酒">从不饮酒</option>
+                                <option value="少量饮酒" selected>少量饮酒</option>
+                                <option value="中等量饮酒">中等量饮酒</option>
+                                <option value="大量饮酒/酗酒">大量饮酒/酗酒</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="nav-buttons">
+                    <button class="btn btn-default" onclick="goToStep(3)">上一步</button>
+                    <button class="btn btn-primary" onclick="showResult()">查看结果</button>
+                </div>
+            </div>
+
+            <!-- 步骤5：评估结果 -->
+            <div class="step" id="step-5">
+                <h1>评估结果</h1>
+                <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+                <hr>
+
+                <div class="result-top-row">
+                    <div class="result-chart-col">
+                        <canvas id="gauge-chart"></canvas>
+                    </div>
+                    <div class="result-info-col">
+                        <h2 id="risk-level-text" class="risk-level">低风险</h2>
+                        <p class="result-meta">
+                            评估人：<span id="result-age">65</span>岁 | <span id="result-gender">男</span><br>
+                            评估时间：<span id="result-time"></span>
+                        </p>
+                        <div class="info-box" id="result-summary"></div>
+                        <div class="warning-box" id="result-suggestion"></div>
+                    </div>
+                </div>
+
+                <hr>
+                <h3>各维度得分分析</h3>
+                <div class="dimension-row">
+                    <div class="radar-col">
+                        <canvas id="radar-chart"></canvas>
+                    </div>
+                    <div class="score-table-col">
+                        <table class="score-table">
+                            <thead>
+                                <tr><th>维度</th><th>得分</th><th>权重</th></tr>
+                            </thead>
+                            <tbody id="score-table-body"></tbody>
+                        </table>
+                        <hr>
+                        <div class="total-score-box">
+                            综合风险总分：<span id="total-score-text">0</span> 分
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <h3>详细分析与建议</h3>
+                <div class="tabs">
+                    <button class="tab-btn active" data-result-tab="memory">记忆分析</button>
+                    <button class="tab-btn" data-result-tab="risk">危险因素</button>
+                    <button class="tab-btn" data-result-tab="medical">就医建议</button>
+                    <button class="tab-btn" data-result-tab="life">生活建议</button>
+                </div>
+
+                <div class="tab-content active" id="result-tab-memory"></div>
+                <div class="tab-content" id="result-tab-risk"></div>
+                <div class="tab-content" id="result-tab-medical"></div>
+                <div class="tab-content" id="result-tab-life">
+                    <h4>饮食建议</h4>
+                    <p>推荐遵循MIND饮食模式：</p>
+                    <ul>
+                        <li>多吃绿叶蔬菜（每天至少1份）</li>
+                        <li>多吃浆果（每周至少2次）</li>
+                        <li>多吃坚果（每天一小把）</li>
+                        <li>多吃全谷物</li>
+                        <li>多吃鱼类（每周至少1次）</li>
+                        <li>多吃豆类</li>
+                        <li>用橄榄油代替其他食用油</li>
+                        <li>减少红肉、黄油、奶酪、糕点和油炸食品</li>
+                    </ul>
+
+                    <h4>运动建议</h4>
+                    <ul>
+                        <li>建议每周至少150分钟中等强度有氧运动</li>
+                        <li>推荐运动：快走、慢跑、游泳、太极拳</li>
+                        <li>每周至少2次力量训练</li>
+                        <li>避免久坐，每小时起身活动5分钟</li>
+                    </ul>
+
+                    <h4>认知训练建议</h4>
+                    <ul>
+                        <li>多读书、看报、学习新知识</li>
+                        <li>下棋、打牌、做数独等益智游戏</li>
+                        <li>学习新技能（如外语、乐器、绘画）</li>
+                        <li>保持好奇心，多思考</li>
+                    </ul>
+
+                    <h4>社交建议</h4>
+                    <ul>
+                        <li>多参加社交活动，与家人朋友保持联系</li>
+                        <li>参加社区活动、兴趣小组</li>
+                        <li>志愿服务</li>
+                        <li>避免孤独和隔离</li>
+                    </ul>
+
+                    <h4>睡眠建议</h4>
+                    <ul>
+                        <li>保持规律的作息时间</li>
+                        <li>每天7-8小时睡眠</li>
+                        <li>睡前避免使用电子设备</li>
+                        <li>如有打鼾严重或白天嗜睡，建议检查睡眠呼吸暂停</li>
+                    </ul>
+
+                    <h4>其他建议</h4>
+                    <ul>
+                        <li>戒烟限酒</li>
+                        <li>控制体重</li>
+                        <li>管理好血压、血糖、血脂</li>
+                        <li>保持积极乐观的心态</li>
+                        <li>减少压力</li>
+                    </ul>
+                </div>
+
+                <hr>
+                <div class="result-buttons">
+                    <button class="btn btn-default" onclick="resetAssessment()">重新评估</button>
+                    <button class="btn btn-default" onclick="alert('报告生成功能开发中...')">下载报告</button>
+                    <button class="btn btn-default" onclick="alert('分享功能开发中...')">分享结果</button>
+                    <button class="btn btn-default" onclick="alert('科普页面开发中...')">了解更多</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

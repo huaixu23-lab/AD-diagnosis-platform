@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>治疗方案 - 阿尔兹海默病辅助诊疗平台</title>
+
+  <!-- 主网站公共样式 -->
+  <link rel="stylesheet" href="../../css/common.css" />
+
+  <!-- 治疗建议模块自己的样式 -->
+  <link rel="stylesheet" href="./treatment.css" />
+
+  <!-- 用于前端读取同文件夹下的 xlsx 文件，需要联网加载这个库 -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+
+<body class="page-bg-doctor">
+  <header class="site-header">
+    <div class="logo">治疗方案</div>
+    <nav class="nav-links">
+      <a href="../../index.html">首页</a>
+      <a href="../index.html">医生工作台</a>
+      <a href="../basic-diagnosis/index.html">初步诊断</a>
+      <a href="../clinical-diagnosis/index.html">进一步诊断</a>
+      <a href="../imaging-diagnosis/index.html">影像诊断</a>
+    </nav>
+  </header>
+
+  <div class="page">
+    <header class="top-header">
+      <div>
+        <h1>阿尔茨海默病辅助治疗建议模块</h1>
+        <p>根据 AD 分期、Aβ 病理状态和风险因素，输出治疗建议、药物参考、风险提醒，并辅助生成文献检索思路。</p>
+      </div>
+      <span class="tag">医学信息实习项目</span>
+    </header>
+
+    <main class="layout">
+      <!-- 左侧输入区 -->
+      <section class="card input-card">
+        <h2>患者情况输入</h2>
+
+        <div class="notice">
+          本模块仅用于课程项目展示和医学信息辅助整理，不替代医生诊断、治疗决策或临床处方。
+        </div>
+
+        <div id="dataStatus" class="file-status">
+          正在读取内置数据表：AD治疗建议数据表_简化版.xlsx
+        </div>
+
+        <label class="form-label">
+          AD 分期
+          <select id="stageSelect">
+            <option value="">正在加载数据表...</option>
+          </select>
+        </label>
+
+        <label class="form-label">
+          Aβ 病理状态
+          <select id="amyloidSelect">
+            <option value="未知">未知</option>
+            <option value="阳性">阳性</option>
+            <option value="阴性">阴性</option>
+            <option value="未检测">未检测</option>
+          </select>
+        </label>
+
+        <div class="form-label">
+          风险因素 / 合并情况
+          <div class="checkbox-group">
+            <label><input type="checkbox" value="MRI高风险" /> MRI 高风险</label>
+            <label><input type="checkbox" value="抗凝用药" /> 正在使用抗凝药</label>
+            <label><input type="checkbox" value="脑出血史" /> 脑出血史</label>
+            <label><input type="checkbox" value="癫痫史" /> 癫痫史</label>
+            <label><input type="checkbox" value="心动过缓" /> 心动过缓 / 传导阻滞</label>
+            <label><input type="checkbox" value="胃肠道不耐受" /> 胃肠道不耐受</label>
+            <label><input type="checkbox" value="肝肾功能异常" /> 肝肾功能异常</label>
+          </div>
+        </div>
+
+        <label class="form-label">
+          疾病情况描述
+          <textarea id="conditionInput" placeholder="例如：患者为轻度AD，Aβ阳性，既往有脑微出血，家属希望了解是否适合抗Aβ单抗治疗。"></textarea>
+        </label>
+
+        <label class="form-label">
+          其他补充信息
+          <textarea id="extraInput" placeholder="例如：年龄较大、跌倒风险高、睡眠差、照护压力大等。"></textarea>
+        </label>
+
+        <button id="generateBtn" class="primary-btn">生成治疗建议</button>
+        <button id="knowledgeBtn" class="third-btn">生成 LLM 知识检索</button>
+        <button id="resetBtn" class="secondary-btn">清空选择</button>
+      </section>
+
+      <!-- 右侧输出区 -->
+      <section class="output-area">
+        <div class="card result-card">
+          <h2>综合治疗建议</h2>
+          <div id="mainResult" class="empty-result">
+            请先选择患者 AD 分期，然后点击“生成治疗建议”。
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <h2>可参考药物</h2>
+          <div id="drugResult" class="empty-result">
+            暂无药物信息。
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <h2>风险提醒</h2>
+          <div id="warningResult" class="empty-result">
+            暂无风险提醒。
+          </div>
+        </div>
+
+        <div class="card result-card">
+          <h2>LLM 知识获取 / 文献检索助手</h2>
+          <div id="knowledgeResult" class="empty-result">
+            点击“生成 LLM 知识检索”后，系统会根据输入情况生成检索关键词、文献检索入口和可复制给大模型的提示词。
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./treatment.js"></script>
+</body>
+</html>
