@@ -3,35 +3,372 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>影像诊断</title>
+  <title>影像诊断 - 医生工作台</title>
+  
+  <!-- 1. 引入整站全局公用样式表 -->
   <link rel="stylesheet" href="../../css/common.css">
-</head>
-<body>
+  
+  <!-- 2. 影像诊断独立组件样式表 -->
+  <link rel="stylesheet" href="./style.css">
 
+  <!-- 3. Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- 🛠️ 专门修复性别按钮 label 样式冲突，实现文字/单选框完美上下左右居中 -->
+  <style>
+    .form-grid .gender-option {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 0 !important;
+        font-weight: 500 !important;
+        color: #1e293b !important;
+        font-size: 0.875rem !important;
+        height: 100% ;
+    }
+    .form-grid .gender-option input[type="radio"] {
+        margin-right: 0.5rem !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="page-bg-doctor">
+
+  <!-- ===== 顶部状态栏 ===== -->
   <header class="site-header">
-    <div class="logo">影像诊断</div>
+    <div class="logo">医生工作台</div>
     <nav class="nav-links">
       <a href="../../index.html">首页</a>
+      <a href="../../patient/risk-check/index.html">风险自测</a>
       <a href="../index.html">医生工作台</a>
-      <a href="../basic-diagnosis/index.html">初步诊断</a>
-      <a href="../clinical-diagnosis/index.html">进一步诊断</a>
-      <a href="../treatment/index.html">治疗方案</a>
     </nav>
   </header>
 
-  <main class="page-container">
-    <section class="module-placeholder">
-      <span class="module-eyebrow">Imaging Layer</span>
-      <h1>影像诊断模块</h1>
-      <p>
-        该模块用于查看 MRI 等影像资料，并辅助提示可能支持阿尔茨海默病评估的影像特征。
-      </p>
+  <!-- ===== 主工作容器 ===== -->
+  <main class="page-container visual-page">
 
-      <div class="notice">
-        此页面后续可扩展为影像标注、复核规则与诊断输出。
+    <!-- 顶部工作流程导引 -->
+    <section class="hero">
+      <div class="hero-content hero-panel">
+        <span class="hero-tag">03 / Imaging</span>
+        <h1>基于深度学习的阿尔茨海默病 MRI 影像辅助诊断系统</h1>
+        <p class="intro-text">
+          本系统采用 <strong>EfficientNet-B0 预训练模型</strong> 对 2D 横断面 MRI 切片进行四分类判别（非痴呆、极轻度、轻度、中度痴呆）；
+          通过 <strong>Grad-CAM 可视化技术</strong> 定位解释模型诊断依据；
+          诊断结果严格映射临床通用量表：<strong>GCA 全脑皮层萎缩量表（0–3 级）</strong> 与 <strong>Fazekas 脑白质病变评分（0–3 分）</strong>，确保无论输入切片是否含海马体，均能给出符合放射科规范的病理评估；
+          <br><br>
+          <strong>使用说明</strong>：① 填写患者基本信息；② 上传单张 2D MRI 横断面切片（PNG/JPG）；③ 点击“开始诊断”，系统将返回：四分类置信度、病变演进轨迹、原始图像与 Grad-CAM 热力图对比、以及基于 GCA/Fazekas 的临床级病理解读。
+        </p>
       </div>
     </section>
+
+    <!-- 工作台操作区网格 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-7">
+      
+      <!-- ============ 左侧操作链 (占5格) ============ -->
+      <div class="lg:col-span-5 flex flex-col gap-7">
+        
+        <!-- 1. 患者个人状态信息面板 -->
+        <section class="floating-panel content-panel">
+          <h2 class="section-title">Patient Info <span>患者信息录入</span></h2>
+          <div class="form-grid">
+            <div>
+              <label>患者编号 *</label>
+              <input type="text" id="patient-id" value="PT-2023-9802" />
+            </div>
+            <div>
+              <label>测试年龄 *</label>
+              <input type="number" id="patient-age" value="72" />
+            </div>
+            <div class="col-span-2">
+              <label>性别</label>
+              <div class="gender-group">
+                <label class="gender-option">
+                  <input type="radio" name="gender" value="male" checked />
+                  <span>男 (Male)</span>
+                </label>
+                <label class="gender-option">
+                  <input type="radio" name="gender" value="female" />
+                  <span>女 (Female)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. MRI 影像采集及上传面板 -->
+        <section class="floating-panel content-panel flex-grow flex flex-col justify-between">
+          <h2 class="section-title">MRI Scan Acquisition <span>影像输入</span></h2>
+          
+          <!-- 隐藏的文件上传框 -->
+          <input type="file" id="file-input" accept="image/*" class="hidden" />
+          
+          <div id="drop-zone">
+            <!-- 上传指示（空状态） -->
+            <div id="upload-prompt" class="flex flex-col items-center justify-center p-6 text-center">
+              <div class="upload-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg>
+              </div>
+              <div class="mt-4">
+                <p class="upload-title">手动点击或拖放 MRI 影像到这里</p>
+                <p class="upload-hint">支持 PNG, JPG, JPEG 格式图片文件</p>
+              </div>
+              <button type="button" class="browse-btn mt-4">浏览本地文件</button>
+            </div>
+
+            <!-- 数据载入预览区（初始化隐藏） -->
+            <div id="preview-container" class="hidden flex flex-col h-full w-full p-2">
+              <div class="canvas-wrapper flex-grow min-h-[300px]" style="position: relative;">
+                <canvas id="mri-canvas"></canvas>
+
+                <!-- 悬停灰度动态探针 -->
+                <div id="pixel-inspector" class="hidden">
+                  <div class="inspector-title">组织探针</div>
+                  <div class="mb-1">矩阵坐标: X:<span id="px-x">0</span> Y:<span id="px-y">0</span></div>
+                  <div class="mb-1">信号强度: <span id="px-gray">0%</span></div>
+                  <div>病理评估: <span id="px-tissue">--</span></div>
+                </div>
+
+                <!-- 交互按键 -->
+                <button id="btn-reset-view">适配视窗</button>
+                <button id="btn-remove-image" class="remove-btn">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="file-info mt-2">
+                <span id="file-name">mri-slice.jpg</span>
+                <span id="file-size">0.0 KB</span>
+              </div>
+            </div>
+          </div>
+
+          <button id="btn-analyze" disabled>
+            开始阿尔兹海默智能诊断分析
+          </button>
+        </section>
+
+      </div>
+
+      <!-- ============ 右侧板块：AI诊断数据分析端 (占7格) ============ -->
+      <div class="lg:col-span-7">
+        
+        <section class="floating-panel content-panel min-h-[620px] flex flex-col justify-between relative">
+          
+          <!-- 默认诊断空状态遮罩 -->
+          <div id="result-empty-state">
+            <div class="empty-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+            </div>
+            <h3>等待输入诊断源</h3>
+            <p>请在左侧配置患者病历卡，并上传对应脑区的 MRI 核磁影像切片以拉起推理模型。</p>
+          </div>
+
+          <!-- 分析结果报单页 -->
+          <div id="report-content" class="report-content hidden flex flex-col gap-6">
+            
+            <!-- 大病症输出头 -->
+            <div class="result-header">
+              <div>
+                <span class="label">Diagnosis Outcome / 诊断结果</span>
+                <span class="value" id="res-outcome">----</span>
+              </div>
+              <div class="text-right">
+                <span class="label text-right">Confidence / 可信度</span>
+                <span class="value" id="res-confidence">--%</span>
+              </div>
+            </div>
+
+            <!-- 分类百分比图谱 -->
+            <div class="probability-section">
+              <span class="label">Probability Spectrum / 分类概率谱</span>
+              <div class="prob-grid mt-3">
+                <div class="prob-item">
+                  <div class="flex justify-between text-xs mb-1 text-slate-500 font-medium">
+                    <span>正常 (Non)</span>
+                    <span id="val-non">0.0%</span>
+                  </div>
+                  <div class="progress-bar"><div id="bar-non" style="width:0%"></div></div>
+                </div>
+                <div class="prob-item">
+                  <div class="flex justify-between text-xs mb-1 text-slate-500 font-medium">
+                    <span>极轻度 (Very Mild)</span>
+                    <span id="val-very-mild">0.0%</span>
+                  </div>
+                  <div class="progress-bar"><div id="bar-very-mild" style="width:0%"></div></div>
+                </div>
+                <div class="prob-item">
+                  <div class="flex justify-between text-xs mb-1 text-slate-500 font-medium">
+                    <span>轻度 (Mild)</span>
+                    <span id="val-mild">0.0%</span>
+                  </div>
+                  <div class="progress-bar"><div id="bar-mild" style="width:0%"></div></div>
+                </div>
+                <div class="prob-item">
+                  <div class="flex justify-between text-xs mb-1 text-slate-500 font-medium">
+                    <span>中度 (Moderate)</span>
+                    <span id="val-moderate">0.0%</span>
+                  </div>
+                  <div class="progress-bar"><div id="bar-moderate" style="width:0%"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 演变状态游标指示器 -->
+            <div class="progression-section">
+              <span class="label">Progression Path / 病理退化轨迹定位</span>
+              <div class="track mt-4">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <div class="marker" id="res-marker" style="left: 0%;"></div>
+              </div>
+              <div class="track-labels mt-2">
+                <span>01 / 认知健康</span>
+                <span>02 / 极轻度萎缩</span>
+                <span>03 / 轻度痴呆</span>
+                <span>04 / 中度痴呆</span>
+              </div>
+            </div>
+
+            <!-- 双图像物理区 -->
+            <div class="comparison-section flex gap-4">
+              <div class="flex-1">
+                <span class="label">Original / 患者源图像 (点击放大)</span>
+                <div class="image-placeholder mt-2 cursor-zoom-in group relative overflow-hidden" id="original-container">
+                  [MRI Image]
+                </div>
+              </div>
+              <div class="flex-1">
+                <span class="label">Grad-CAM / 决策特征热力定位图 (点击放大)</span>
+                <div class="image-placeholder mt-2 cursor-zoom-in group relative overflow-hidden" id="gradcam-container">
+                  [CAM Projections]
+                </div>
+              </div>
+            </div>
+
+            <!-- AI 临床病理学评述 -->
+            <div class="interpretation">
+              <span class="label">Pathological Interpretation / 神经解剖学病理解读</span>
+              <p id="res-interpretation" class="mt-2 whitespace-pre-line leading-relaxed text-slate-600 text-xs">等待诊断启动。</p>
+            </div>
+            
+          </div>
+          
+        </section>
+        
+      </div>
+      
+    </div>
+
+    <!-- ===== 底部临床分期图谱对照 ===== -->
+    <section class="floating-panel content-panel mt-7">
+      <h2 class="section-title">Standard Clinical References <span>阿尔兹海默症标准病理分期图谱对照</span></h2>
+      <div class="ref-grid mt-4">
+        
+        <div class="ref-card flex flex-col justify-between">
+          <div>
+            <div class="ref-card-header flex justify-between items-center">
+              <span>1. Non-Demented</span>
+              <span class="badge">GCA 0级 / Fazekas 0分</span>
+            </div>
+            <div class="ref-image cursor-zoom-in overflow-hidden relative group aspect-[4/3] bg-slate-900 rounded my-2">
+              <img src="./images/non.jpg" alt="Non-Demented MRI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-semibold transition-opacity duration-200 pointer-events-none">🔍 点击放大</div>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">
+              <strong>GCA 0级 (无脑萎缩)</strong>：皮质脑回形态充沛，无回沟变宽。脑室比例正常。<br>
+              <strong>Fazekas 0分 (无病灶)</strong>：深部髓质髓鞘完整，T2/FLAIR 下没有或仅存有1个孤立的白质高信号(WMH)点。<sup>[1]</sup>
+            </p>
+          </div>
+        </div>
+
+        <div class="ref-card flex flex-col justify-between">
+          <div>
+            <div class="ref-card-header flex justify-between items-center">
+              <span>2. Very Mild Demented</span>
+              <span class="badge mild">GCA 1级 / Fazekas 1分</span>
+            </div>
+            <div class="ref-image cursor-zoom-in overflow-hidden relative group aspect-[4/3] bg-slate-900 rounded my-2">
+              <img src="./images/very_mild.jpg" alt="Very Mild Demented MRI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-semibold transition-opacity duration-200 pointer-events-none">🔍 点击放大</div>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">
+              <strong>GCA 1级 (轻度脑萎缩)</strong>：大半脑沟可见轻度代偿性增宽，脑脊液蛛网膜裂隙轻微变深。<br>
+              <strong>Fazekas 1分 (散在病灶)</strong>：深部白质显现数个点状高信号退行灶，目前各病灶间互不连结。<sup>[1]</sup>
+            </p>
+          </div>
+        </div>
+
+        <div class="ref-card flex flex-col justify-between">
+          <div>
+            <div class="ref-card-header flex justify-between items-center">
+              <span>3. Mild Demented</span>
+              <span class="badge mod">GCA 2级 / Fazekas 2分</span>
+            </div>
+            <div class="ref-image cursor-zoom-in overflow-hidden relative group aspect-[4/3] bg-slate-900 rounded my-2">
+              <img src="./images/mild.jpg" alt="Mild Demented MRI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-semibold transition-opacity duration-200 pointer-events-none">🔍 点击放大</div>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">
+              <strong>GCA 2级 (中度脑萎缩)</strong>：脑回实质收缩，脑沟裂隙加深增宽明显。侧脑室表现中度增宽。<br>
+              <strong>Fazekas 2分 (病灶融合)</strong>：白质病灶区扩散扩大并开始跨纤维连结，呈典型的“桥接”表现。<sup>[1]</sup>
+            </p>
+          </div>
+        </div>
+
+        <div class="ref-card flex flex-col justify-between">
+          <div>
+            <div class="ref-card-header flex justify-between items-center">
+              <span>4. Moderate Demented</span>
+              <span class="badge severe">GCA 3级 / Fazekas 3分</span>
+            </div>
+            <div class="ref-image cursor-zoom-in overflow-hidden relative group aspect-[4/3] bg-slate-900 rounded my-2">
+              <img src="./images/moderate.jpg" alt="Moderate Demented MRI" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-semibold transition-opacity duration-200 pointer-events-none">🔍 点击放大</div>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-normal">
+              <strong>GCA 3级 (重度脑萎缩)</strong>：皮层高度薄化，脑回极扁极窄呈“刀片样萎缩”，侧脑室球状扩张变宽。<br>
+              <strong>Fazekas 3分 (大片融合)</strong>：脑髓质白质大范围弥漫融连成片。常伴缺血小血管病变。<sup>[1]</sup>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ===== 新增：参考文献区 ===== -->
+    <section class="floating-panel content-panel mt-7">
+      <h2 class="section-title">References <span>参考文献</span></h2>
+      <div class="source-box">
+        <ol class="space-y-2 text-sm">
+          <li>
+            [1] 中华医学会放射学分会磁共振学组, 北京认知神经科学学会. 阿尔茨海默病MR检查规范中国专家共识[J]. 中华放射学杂志, 2019, 53(8): 635–641.
+          </li>
+        </ol>
+      </div>
+    </section>
+
   </main>
 
+  <!-- ========================================== -->
+  <!-- 3. 新建全屏查看大图的 Modal 灯箱叠加图层 -->
+  <!-- ========================================== -->
+  <div id="image-modal" class="fixed inset-0 z-[200] hidden bg-black/90 flex flex-col items-center justify-center cursor-zoom-out transition-opacity duration-300">
+    <div class="absolute top-4 right-4 text-white text-sm bg-black/50 px-4 py-2 rounded-full border border-slate-700 pointer-events-none select-none">
+      点击画面任意位置退出
+    </div>
+    <!-- 放大显示主体 -->
+    <img id="modal-img" src="" alt="放大影像" class="max-w-[85vw] max-h-[85vh] object-contain border border-slate-800 rounded-lg shadow-2xl transition-transform duration-200">
+    <!-- 下部自解释文字框 -->
+    <div id="modal-caption" class="mt-4 text-white/90 text-sm font-semibold tracking-wider bg-slate-900/80 px-6 py-2 rounded-full border border-slate-800">
+      图谱说明文字
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
 </body>
 </html>

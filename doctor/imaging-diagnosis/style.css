@@ -1,0 +1,556 @@
+/* ==========================================================================
+   IMAGE DIAGNOSIS MODULE STYLES (ALIGNING WITH COMMON.CSS SPECIFICATIONS)
+   ========================================================================== */
+
+/* ---------- 患者名片结构表单 ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.form-grid label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--mist-700);
+  margin-bottom: 6px;
+}
+
+.form-grid input[type="text"],
+.form-grid input[type="number"] {
+  width: 100%;
+  background: var(--paper-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-grid input:focus {
+  border-color: var(--mist-700);
+  background: var(--paper-strong);
+  box-shadow: 0 0 0 3px rgba(95, 123, 128, 0.16);
+}
+
+/* 性别单选组组件化 */
+.gender-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-muted);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gender-option:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.gender-option input[type="radio"] {
+  accent-color: var(--mist-900);
+}
+
+.gender-option:has(input:checked) {
+  background: var(--paper-strong);
+  border-color: var(--mist-700);
+  color: var(--ink);
+  font-weight: 800;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- 影像采集盒 drop-zone ---------- */
+#drop-zone {
+  margin-top: 12px;
+  border: 2px dashed var(--mist-500);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.22);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 310px;
+}
+
+#drop-zone:hover {
+  background: var(--paper-muted);
+  border-color: var(--mist-900);
+}
+
+.upload-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mist-700);
+  box-shadow: var(--shadow-soft);
+}
+
+.upload-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--mist-900);
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.browse-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--mist-900);
+  background: var(--paper-strong);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.2s;
+}
+
+.browse-btn:hover {
+  border-color: var(--mist-700);
+  background: #ffffff;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ---------- 胶域与画布 Canvas 状态样式 ---------- */
+.canvas-wrapper {
+  position: relative;
+  background: #0f1c1f; /* 契合医学读片必要的暗对比度，但注入了系统主体的微量灰绿底色 */
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+}
+
+/* 离屏读片探针 */
+#pixel-inspector {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(38, 56, 59, 0.94);
+  color: var(--mist-100);
+  font-size: 11px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--mist-700);
+  font-family: inherit;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.inspector-title {
+  color: var(--mist-300);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding-bottom: 4px;
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+#px-gray {
+  color: #ffd054;
+  font-weight: 700;
+}
+
+#px-tissue {
+  font-weight: 700;
+}
+
+/* 适配图层按键 */
+#btn-reset-view {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(51, 77, 82, 0.82);
+  color: var(--mist-100);
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+  transition: all 0.2s;
+}
+
+#btn-reset-view:hover {
+  background: var(--mist-900);
+}
+
+.remove-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(220, 38, 38, 0.82);
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.remove-btn:hover {
+  background: rgba(220, 38, 38, 1);
+}
+
+.file-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* ---------- 临床主诊断按钮 (对齐 primary-button，大尺寸设计) ---------- */
+#btn-analyze {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  margin-top: 16px;
+}
+
+#btn-analyze:disabled {
+  background: var(--paper-muted);
+  border-color: var(--line);
+  color: var(--mist-500);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+#btn-analyze:not(:disabled) {
+  background: var(--mist-900);
+  border-color: var(--mist-900);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(51, 77, 82, 0.25);
+}
+
+#btn-analyze:not(:disabled):hover {
+  background: var(--mist-700);
+  border-color: var(--mist-700);
+  transform: translateY(-1px);
+}
+
+/* ---------- 右侧报告层空白态 ---------- */
+#result-empty-state {
+  position: absolute;
+  inset: 0;
+  background: rgba(239, 246, 244, 0.94);
+  backdrop-filter: blur(12px) saturate(110%);
+  border-radius: var(--radius);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+}
+
+.empty-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  color: var(--mist-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+#result-empty-state h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--mist-900);
+  margin: 0 0 8px;
+}
+
+#result-empty-state p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  max-width: 250px;
+  line-height: 1.65;
+}
+
+/* ---------- 报告分析文字排版 ---------- */
+.label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--mist-700);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.result-header .value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--mist-900);
+}
+
+/* 分类概率谱长条 */
+.prob-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.prob-item {
+  background: rgba(255, 255, 255, 0.28);
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--mist-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.progress-bar div {
+  height: 100%;
+  background: var(--mist-500);
+  border-radius: var(--radius);
+  transition: width 0.5s ease;
+}
+
+/* 点亮分类条高亮 */
+.progress-bar div.indigo {
+  background: var(--mist-900);
+}
+
+/* 退化轨迹定位滑轨 */
+.track {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: var(--mist-200);
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.track .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mist-500);
+  z-index: 1;
+}
+
+.track .marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--mist-900);
+  border: 3px solid #ffffff;
+  box-shadow: 0 3px 8px rgba(38, 56, 59, 0.25);
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 2;
+}
+
+.track-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--mist-700);
+  font-weight: 700;
+}
+
+/* 影像展示比照窗 */
+.comparison-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.comparison-section .image-placeholder {
+  aspect-ratio: 1;
+  background: #0f1c1f;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  color: var(--mist-550);
+  font-family: monospace;
+  overflow: hidden;
+}
+
+.comparison-section .image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 灰质解剖文字报告 */
+.interpretation {
+  background: rgba(255, 255, 255, 0.38);
+  border-radius: var(--radius);
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--mist-700);
+}
+
+.interpretation p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* ---------- 底部参考病理图谱对照 ---------- */
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .ref-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .ref-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ref-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, rgba(252, 253, 250, 0.58), rgba(229, 238, 237, 0.34)), rgba(255, 255, 255, 0.18);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(16px) saturate(116%);
+  padding: 16px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.ref-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(223, 234, 233, 0.56)), rgba(255, 255, 255, 0.24);
+  box-shadow: var(--shadow);
+}
+
+.ref-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ref-card-header span:first-child {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--mist-900);
+}
+
+.badge {
+  font-size: 10.5px;
+  background: var(--mist-100);
+  color: var(--mist-900);
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 800;
+  border: 1px solid rgba(80, 112, 118, 0.2);
+}
+
+.badge.mild {
+  background: rgba(95, 123, 128, 0.15);
+  color: var(--mist-900);
+}
+
+.badge.mod {
+  background: rgba(245, 158, 11, 0.12);
+  color: #c27803;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.badge.severe {
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.18);
+}
+
+.ref-image {
+  aspect-ratio: 4/3;
+  background: #0f1c1f;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  color: var(--mist-500);
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.ref-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ref-card p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ---------- 辅助快捷类 ---------- */
+.hidden {
+  display: none !important;
+}

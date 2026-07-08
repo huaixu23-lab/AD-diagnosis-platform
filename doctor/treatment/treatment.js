@@ -24,7 +24,9 @@ async function loadBuiltInExcel() {
   const stageSelect = document.getElementById("stageSelect");
 
   try {
-    status.textContent = `正在读取内置数据表：${EXCEL_FILE_NAME}`;
+    if (status) {
+      status.textContent = `正在读取内置数据表：${EXCEL_FILE_NAME}`;
+    }
 
     const response = await fetch(encodeURI(`./${EXCEL_FILE_NAME}`));
 
@@ -45,18 +47,22 @@ async function loadBuiltInExcel() {
 
     initStageOptions();
 
-    status.className = "file-status success";
-    status.textContent = `已成功读取内置数据表：${EXCEL_FILE_NAME}`;
+    if (status) {
+      status.className = "file-status success";
+      status.textContent = `已成功读取内置数据表：${EXCEL_FILE_NAME}`;
+    }
   } catch (error) {
     console.error(error);
 
-    status.className = "file-status error";
-    status.innerHTML = `
-      读取数据表失败。请确认以下几点：<br>
-      1. ${EXCEL_FILE_NAME} 和 index.html 在同一个文件夹下；<br>
-      2. 用 VSCode 的 Live Server 打开网页，不要直接双击 index.html；<br>
-      3. xlsx 里包含 stage_plan、drug_reference、recommendation_rules、risk_warning_rules、sources 这几张 sheet。
-    `;
+    if (status) {
+      status.className = "file-status error";
+      status.innerHTML = `
+        读取数据表失败。请确认以下几点：<br>
+        1. ${EXCEL_FILE_NAME} 和 index.html 在同一个文件夹下；<br>
+        2. 用 VSCode 的 Live Server 打开网页，不要直接双击 index.html；<br>
+        3. xlsx 里包含 stage_plan、drug_reference、recommendation_rules、risk_warning_rules、sources 这几张 sheet。
+      `;
+    }
 
     stageSelect.innerHTML = `<option value="">数据表读取失败</option>`;
   }
