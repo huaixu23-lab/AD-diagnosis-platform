@@ -1,0 +1,8 @@
+﻿Report_Module,Input_Source,Output_Content_CN,Priority,Analysis_Basis_CN
+模块1：患者主要表现,AD_symptom_summary_mapping_CN.csv; AD_doctor_input_symptom_mapping_CN.csv,整合患者症状标准化结果，生成医生可阅读的临床表现总结，突出主要问题、伴随线索和需补充信息。,1,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块2：认知损害领域总结,AD_multi_feature_integration_rule_CN.csv; generated 7-feature matrix,基于七项核心临床变量进行分层表达，区分主要受累领域、可能涉及领域和尚需进一步评估领域。,2,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块3：AD相关模式分析,AD_symptom_pattern_rule_database_v3_CN.csv; AD_clinical_interpretation_output_database_CN.csv,匹配Pattern_ID后输出中文模式名称和AD相关临床意义，使用提示和符合模式语言，不输出确定性诊断。,3,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块4：可能阶段提示,AD_stage_interpretation_rule_CN.csv; functional_decline; positive cognitive features,根据功能下降等级和认知域受损范围生成阶段提示，强调MCI与痴呆阶段需以功能独立性区分。,4,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块5：鉴别诊断提示,AD_red_flag_warning_database_CN.csv; AD_differential_diagnosis_rule_database_v3_CN.csv,结合红旗信息和非典型表现，生成需要关注的鉴别方向及关注原因。,5,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块6：进一步检查建议,AD_assessment_recommendation_database_v3_CN.csv; AD_clinical_interpretation_output_database_CN.csv,按认知功能评估、结构影像学检查、AD相关生物标志物评估的顺序给出建议，不对所有患者直接推荐高级检查。,6,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。
+模块7：临床注意事项,AD_doctor_report_template_CN.csv; AD_clinical_interpretation_output_database_CN.csv,固定输出辅助决策边界：结果仅用于临床辅助判断，需结合完整病史、体格检查和辅助检查综合评估。,7,本次辅助分析基于患者症状标准化结果、七项核心临床变量以及AD临床模式规则进行，不替代医生诊断。

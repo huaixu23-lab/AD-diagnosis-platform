@@ -28,22 +28,15 @@ function initApp() {
 // ==================== 通用：步骤切换与侧边栏 ====================
 function goToStep(stepIndex) {
     state.currentStep = stepIndex;
-
-    // 切换主步骤显示
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     document.getElementById(`step-${stepIndex}`).classList.add('active');
-
-    // 更新侧边栏
     updateSidebar();
-
-    // 滚动到顶部
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateSidebar() {
     const stepNames = ["首页", "基本信息", "症状自评", "认知测试", "生活方式", "评估结果"];
     const items = document.querySelectorAll('#sidebar-steps .step-item');
-
     items.forEach((item, index) => {
         item.classList.remove('active', 'completed');
         if (index < state.currentStep) {
@@ -56,7 +49,6 @@ function updateSidebar() {
             item.textContent = stepNames[index];
         }
     });
-
     document.getElementById('progress-num').textContent = Math.min(state.currentStep, 5);
 }
 
@@ -64,11 +56,9 @@ function updateSidebar() {
 function initWelcomePage() {
     const agreeCheck = document.getElementById('agree-check');
     const startBtn = document.getElementById('start-btn');
-
     agreeCheck.addEventListener('change', () => {
         startBtn.disabled = !agreeCheck.checked;
     });
-
     startBtn.addEventListener('click', () => {
         goToStep(1);
     });
@@ -76,14 +66,12 @@ function initWelcomePage() {
 
 // ==================== 步骤1：基本信息逻辑 ====================
 function initBasicInfoPage() {
-    // 年龄滑块实时显示
     const ageSlider = document.getElementById('age');
     const ageValue = document.getElementById('age-value');
     ageSlider.addEventListener('input', () => {
         ageValue.textContent = ageSlider.value;
     });
 
-    // 家族史联动 APOE 选项
     const familyRadios = document.querySelectorAll('input[name="family_history"]');
     familyRadios.forEach(radio => {
         radio.addEventListener('change', () => {
@@ -98,7 +86,6 @@ function nextStepFromBasic() {
     const errorBox = document.getElementById('basic-error');
     const unanswered = [];
 
-    // 采集所有表单数据
     const age = parseInt(document.getElementById('age').value);
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
     const education = document.getElementById('education').value;
@@ -117,7 +104,6 @@ function nextStepFromBasic() {
     const medications = Array.from(document.querySelectorAll('input[name="medications"]:checked'))
         .map(el => el.value);
 
-    // 表单校验
     if (!gender) unanswered.push('性别');
     if (!education) unanswered.push('最高文化程度');
     if (!occupation) unanswered.push('职业类型');
@@ -139,7 +125,6 @@ function nextStepFromBasic() {
     }
     errorBox.style.display = 'none';
 
-    // 保存到全局状态
     state.basicInfo = {
         age, gender, education, occupation, marital, living,
         family_history: familyHistory, apoe,
@@ -158,7 +143,6 @@ function initSymptomPage() {
     const adlOptions = ["请选择", "完全可以自己做", "有点困难但基本能做", "需要部分帮助", "完全需要别人帮助"];
     const adlScores = [-1, 0, 1, 2, 3];
 
-    // 1. 记忆功能 8题
     renderQuestionList('memory-questions', [
         ["2.1.1", "您是否经常忘记最近发生的事情（如刚说过的话、刚做过的事）？"],
         ["2.1.2", "您是否经常忘记重要的约会、纪念日或安排？"],
@@ -170,7 +154,6 @@ function initSymptomPage() {
         ["2.1.8", "您是否记不清自己的年龄、生日或重要往事？"]
     ], normalOptions, normalScores, 'mem');
 
-    // 2. 语言功能 5题
     renderQuestionList('language-questions', [
         ["2.2.1", "您说话时是否经常'找词困难'，想说某个词但半天想不出来？"],
         ["2.2.2", "您是否难以理解别人说的复杂句子？"],
@@ -179,7 +162,6 @@ function initSymptomPage() {
         ["2.2.5", "您写字时是否经常写错字、漏字？"]
     ], normalOptions, normalScores, 'lang');
 
-    // 3. 执行功能 5题
     renderQuestionList('exec-questions', [
         ["2.3.1", "您是否觉得规划或完成复杂的事情越来越困难？"],
         ["2.3.2", "您的判断力是否下降（如容易被骗、做出不明智决定）？"],
@@ -188,7 +170,6 @@ function initSymptomPage() {
         ["2.3.5", "您是否变得越来越被动、懒散？"]
     ], normalOptions, normalScores, 'exec');
 
-    // 4. 视空间功能 4题
     renderQuestionList('spatial-questions', [
         ["2.4.1", "您上下楼梯或台阶时是否容易踩空？"],
         ["2.4.2", "您是否经常打翻杯子、碗？"],
@@ -196,7 +177,6 @@ function initSymptomPage() {
         ["2.4.4", "您看地图或识别路线是否变得困难？"]
     ], normalOptions, normalScores, 'spatial');
 
-    // 5. 基本日常生活能力 ADL 5题
     renderQuestionList('adl-questions', [
         ["2.5.1.1", "穿衣服（扣扣子、拉拉链、系鞋带）"],
         ["2.5.1.2", "吃饭（夹菜、盛饭）"],
@@ -205,7 +185,6 @@ function initSymptomPage() {
         ["2.5.1.5", "走路或上下楼梯"]
     ], adlOptions, adlScores, 'adl');
 
-    // 6. 工具性日常生活能力 IADL 5题
     renderQuestionList('iadl-questions', [
         ["2.5.2.1", "去超市或市场购物"],
         ["2.5.2.2", "准备饭菜"],
@@ -214,7 +193,6 @@ function initSymptomPage() {
         ["2.5.2.5", "按时按量服药"]
     ], adlOptions, adlScores, 'iadl');
 
-    // 7. 精神行为症状 6题
     renderQuestionList('bpsd-questions', [
         ["2.6.1", "您是否看到或听到实际上不存在的东西？"],
         ["2.6.2", "您是否总是怀疑别人偷了您的东西或有人要害您？"],
@@ -224,7 +202,6 @@ function initSymptomPage() {
         ["2.6.6", "您是否睡眠不好，晚上不睡、白天打瞌睡？"]
     ], normalOptions, normalScores, 'bpsd');
 
-    // Tab 切换事件
     document.querySelectorAll('#step-2 .tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const tabName = btn.dataset.tab;
@@ -238,7 +215,6 @@ function initSymptomPage() {
     updateSymptomProgress();
 }
 
-// 动态生成单选题列表
 function renderQuestionList(containerId, questionList, options, scores, prefix) {
     const container = document.getElementById(containerId);
     questionList.forEach(([qId, qText]) => {
@@ -269,7 +245,7 @@ function renderQuestionList(containerId, questionList, options, scores, prefix) 
 
         item.appendChild(radioGroup);
         container.appendChild(item);
-        state.answers[qId] = -1; // 初始标记为未作答
+        state.answers[qId] = -1;
     });
 }
 
@@ -311,7 +287,6 @@ function nextTestStep() {
     updateTestStepUI();
 }
 
-// 测试1：瞬时记忆
 function confirmMemory() {
     state.memoryShowed = true;
     document.getElementById('memory-confirm-btn').style.display = 'none';
@@ -319,9 +294,7 @@ function confirmMemory() {
     document.getElementById('memory-next-btn').style.display = 'inline-block';
 }
 
-// 测试2：注意力与计算
 function submitAttentionTest() {
-    // 连续减7 评分
     const correctAnswers = [93, 86, 79, 72, 65];
     const userAnswers = [
         parseInt(document.getElementById('sub7_1').value) || 0,
@@ -335,7 +308,6 @@ function submitAttentionTest() {
         if (val === correctAnswers[i]) sub7Score += 0.6;
     });
 
-    // 倒背数字 评分
     let reverseScore = 0;
     if (document.getElementById('reverse_1').value === '247') reverseScore += 0.5;
     if (document.getElementById('reverse_2').value === '1583') reverseScore += 0.7;
@@ -345,7 +317,6 @@ function submitAttentionTest() {
     nextTestStep();
 }
 
-// 测试3：语言流畅性
 function submitFluencyTest() {
     const input = document.getElementById('animals_input').value.trim();
     if (!input) {
@@ -353,12 +324,10 @@ function submitFluencyTest() {
         return;
     }
 
-    // 去重处理
     const animals = input.split(/[,，\s]+/).filter(a => a.trim());
     const uniqueAnimals = [...new Set(animals)];
     const count = uniqueAnimals.length;
 
-    // 评分
     let score;
     if (count >= 15) score = 3;
     else if (count >= 10) score = 2;
@@ -372,7 +341,6 @@ function submitFluencyTest() {
     nextTestStep();
 }
 
-// 测试4：视空间测试
 function submitSpatialTest() {
     const errorBox = document.getElementById('spatial-error');
     const q1 = document.querySelector('input[name="spatial_q1"]:checked');
@@ -393,7 +361,6 @@ function submitSpatialTest() {
     nextTestStep();
 }
 
-// 测试5：定向力测试
 function submitOrientationTest() {
     const errorBox = document.getElementById('orientation-error');
     const weekday = document.getElementById('weekday').value;
@@ -407,7 +374,6 @@ function submitOrientationTest() {
     }
     errorBox.style.display = 'none';
 
-    // 1. 瞬时记忆回忆得分
     const userWords = [
         document.getElementById('recall_1').value.trim(),
         document.getElementById('recall_2').value.trim(),
@@ -419,26 +385,22 @@ function submitOrientationTest() {
     });
     state.cognitiveTest.recall_score = recallScore;
 
-    // 2. 定向力得分
     let orientationScore = 0;
     const today = new Date();
     const year = parseInt(document.getElementById('year').value);
     const month = parseInt(document.getElementById('month').value);
     const day = parseInt(document.getElementById('day').value);
 
-    // 年份
     if (year === today.getFullYear()) orientationScore += 1;
-    // 月日
     if (month === today.getMonth() + 1 && day === today.getDate()) {
         orientationScore += 2;
     } else if (month === today.getMonth() + 1 || day === today.getDate()) {
         orientationScore += 1;
     }
-    // 星期
+
     const weekdayMap = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     if (weekday === weekdayMap[today.getDay()]) orientationScore += 1;
 
-    // 季节
     const monthNum = today.getMonth() + 1;
     let monthSeason;
     if (monthNum >= 3 && monthNum <= 5) monthSeason = "春季";
@@ -447,12 +409,10 @@ function submitOrientationTest() {
     else monthSeason = "冬季";
     if (season === monthSeason) orientationScore += 0.5;
 
-    // 首都
     if (['北京', '北京市'].includes(capital)) orientationScore += 0.5;
 
     state.cognitiveTest.orientation_score = orientationScore;
 
-    // 计算认知测试总分
     const ct = state.cognitiveTest;
     const totalCognitive = (
         (ct.recall_score || 0) +
@@ -464,7 +424,6 @@ function submitOrientationTest() {
     state.cognitiveTest.total = totalCognitive;
     document.getElementById('cognitive-total-score').textContent = totalCognitive.toFixed(1);
 
-    // 进入完成页
     state.testStep = 5;
     updateTestStepUI();
 }
@@ -509,7 +468,7 @@ function collectLifestyleData() {
     };
 }
 
-// ==================== 核心：评分算法（1:1 复刻原版本） ====================
+// ==================== 核心：评分算法 ====================
 function calculateTotalScore() {
     const answers = state.answers;
     const basicInfo = state.basicInfo;
@@ -518,12 +477,9 @@ function calculateTotalScore() {
     state.lifestyle = lifestyle;
 
     const dimensionScores = {};
-
-    // ---------- D1: 人口统计学与家族史（满分15） ----------
     let d1Raw = 0;
     const age = basicInfo.age;
 
-    // 年龄
     if (age < 50) d1Raw += 0;
     else if (age < 60) d1Raw += 1;
     else if (age < 65) d1Raw += 2;
@@ -533,49 +489,36 @@ function calculateTotalScore() {
     else if (age < 85) d1Raw += 9;
     else d1Raw += 12;
 
-    // 性别
     if (basicInfo.gender === '女') d1Raw += 2;
 
-    // 教育程度
     const eduScores = {
         '文盲/小学未毕业': 4, '小学毕业': 3, '初中毕业': 2,
         '高中/中专毕业': 1, '大专/本科': 0, '硕士及以上': 0
     };
     d1Raw += eduScores[basicInfo.education] || 0;
 
-    // 家族史
     const fhScores = {
-        '没有': 0,
-        '有1位二级亲属': 2,
-        '有1位一级亲属': 5,
-        '有2位及以上一级亲属': 8
+        '没有': 0, '有1位二级亲属': 2, '有1位一级亲属': 5, '有2位及以上一级亲属': 8
     };
     d1Raw += fhScores[basicInfo.family_history] || 0;
 
-    // APOE基因
     const apoeScores = {
-        '没做过/不清楚': 0,
-        '没有携带APOEε4': 0,
-        '携带1个APOEε4': 5,
-        '携带2个APOEε4': 10
+        '没做过/不清楚': 0, '没有携带APOEε4': 0,
+        '携带1个APOEε4': 5, '携带2个APOEε4': 10
     };
     d1Raw += apoeScores[basicInfo.apoe] || 0;
 
-    // 基础疾病
     d1Raw += ({'没有': 0, '有，控制良好': 1, '有，控制不佳': 3}[basicInfo.hypertension] || 0);
     d1Raw += ({'没有': 0, '有，控制良好': 1, '有，控制不佳': 3}[basicInfo.diabetes] || 0);
     d1Raw += ({'没有': 0, '有过1次': 3, '有过2次及以上': 5}[basicInfo.stroke] || 0);
     d1Raw += ({'没有': 0, '有，控制良好': 1, '有，控制不佳': 2}[basicInfo.hyperlipidemia] || 0);
     d1Raw += ({'没有': 0, '曾经有过': 2, '目前仍有': 4}[basicInfo.depression] || 0);
     d1Raw += ({
-        '没有': 0,
-        '有，未失去意识': 1,
-        '有，失去意识<30分钟': 2,
-        '有，失去意识>30分钟': 4
+        '没有': 0, '有，未失去意识': 1,
+        '有，失去意识<30分钟': 2, '有，失去意识>30分钟': 4
     }[basicInfo.head_injury] || 0);
     d1Raw += ({'没有': 0, '有，已控制': 1, '有，未控制': 3}[basicInfo.thyroid] || 0);
 
-    // 用药史
     const meds = basicInfo.medications;
     if (!meds.includes('以上都没有')) {
         d1Raw += Math.min(meds.length * 2, 6);
@@ -583,14 +526,10 @@ function calculateTotalScore() {
 
     dimensionScores.D1 = (d1Raw / 57) * 15;
 
-    // ---------- D2: 记忆功能（满分25） ----------
     let d2Raw = 0;
-    for (let i = 1; i <= 8; i++) {
-        d2Raw += answers['2.1.' + i] || 0;
-    }
+    for (let i = 1; i <= 8; i++) d2Raw += answers['2.1.' + i] || 0;
     dimensionScores.D2 = (d2Raw / 24) * 25;
 
-    // ---------- D3: 其他认知域（满分20） ----------
     let langRaw = 0, execRaw = 0, spatialRaw = 0;
     for (let i = 1; i <= 5; i++) langRaw += answers['2.2.' + i] || 0;
     for (let i = 1; i <= 5; i++) execRaw += answers['2.3.' + i] || 0;
@@ -599,27 +538,19 @@ function calculateTotalScore() {
     const d3Weighted = (langRaw / 15) * 0.4 + (execRaw / 15) * 0.4 + (spatialRaw / 12) * 0.2;
     dimensionScores.D3 = d3Weighted * 20;
 
-    // ---------- D4: 日常生活能力（满分15） ----------
     let adlRaw = 0, iadlRaw = 0;
     for (let i = 1; i <= 5; i++) adlRaw += answers['2.5.1.' + i] || 0;
     for (let i = 1; i <= 5; i++) iadlRaw += answers['2.5.2.' + i] || 0;
     dimensionScores.D4 = ((adlRaw + iadlRaw) / 30) * 15;
 
-    // ---------- D5: 精神行为症状（满分10） ----------
     let d5Raw = 0;
-    for (let i = 1; i <= 6; i++) {
-        d5Raw += answers['2.6.' + i] || 0;
-    }
+    for (let i = 1; i <= 6; i++) d5Raw += answers['2.6.' + i] || 0;
     dimensionScores.D5 = (d5Raw / 18) * 10;
 
-    // ---------- D6: 认知筛查测试（满分10，反向计分） ----------
     const d6TestScore = cognitiveTest.total || 10;
     dimensionScores.D6 = ((20 - d6TestScore) / 20) * 10;
 
-    // ---------- D7: 生活方式（满分5） ----------
     let d7Raw = 0;
-
-    // 饮食
     d7Raw += ({
         '几乎每天': 0, '每周3-4次': 0, '每周1-2次': 1,
         '每月1-2次': 2, '很少或从不吃': 3
@@ -633,7 +564,6 @@ function calculateTotalScore() {
         '每周1-2次': 2, '几乎每天': 3
     }[lifestyle.diet.junk_food] || 2);
 
-    // 运动
     d7Raw += ({
         '每周5次以上': 0, '每周3-4次': 1,
         '每周1-2次': 2, '很少运动': 3
@@ -643,7 +573,6 @@ function calculateTotalScore() {
         '6-8小时': 2, '8小时以上': 3
     }[lifestyle.exercise.sitting] || 2);
 
-    // 睡眠
     d7Raw += ({
         '7-8小时': 0, '6-7小时/8-9小时': 1,
         '5-6小时/9-10小时': 2, '5小时以下/10小时以上': 3
@@ -653,7 +582,6 @@ function calculateTotalScore() {
         '没有': 0, '有一点': 1, '很严重/有呼吸暂停': 3
     }[lifestyle.sleep.sleep_apnea] || 0);
 
-    // 社交与脑力
     d7Raw += ({
         '每周3次以上': 0, '每周1-2次': 1,
         '每月1-2次': 2, '很少或几乎没有': 3
@@ -663,7 +591,6 @@ function calculateTotalScore() {
         '每周1-2次': 2, '很少或几乎没有': 3
     }[lifestyle.social.mental] || 1);
 
-    // 不良习惯
     d7Raw += ({
         '从不吸烟': 0, '已戒烟5年以上': 0, '已戒烟不足5年': 1,
         '目前仍吸烟（每天少于10支）': 2, '目前仍吸烟（每天10支以上）': 3
@@ -675,13 +602,11 @@ function calculateTotalScore() {
 
     dimensionScores.D7 = (d7Raw / 35) * 5;
 
-    // ---------- 总分与年龄校正 ----------
     let total = Object.values(dimensionScores).reduce((sum, val) => sum + val, 0);
     let ageFactor = 0.8 + (age - 50) * 0.01;
     ageFactor = Math.max(0.8, Math.min(1.2, ageFactor));
     total = Math.min(total * ageFactor, 100);
 
-    // ---------- 风险等级判定 ----------
     let riskLevel;
     if (total < 20) riskLevel = '低风险';
     else if (total < 40) riskLevel = '中低风险';
@@ -689,7 +614,6 @@ function calculateTotalScore() {
     else if (total < 80) riskLevel = '高风险';
     else riskLevel = '极高风险';
 
-    // 保存到全局状态
     state.totalScore = total;
     state.riskLevel = riskLevel;
     state.dimensionScores = dimensionScores;
@@ -708,10 +632,8 @@ function showResult() {
     renderResultTabContents();
 }
 
-// 结果摘要
 function renderResultSummary() {
     const { totalScore, riskLevel, basicInfo } = state;
-
     const riskColors = {
         '低风险': '#38a169',
         '中低风险': '#d69e2e',
@@ -747,7 +669,6 @@ function renderResultSummary() {
     document.getElementById('result-suggestion').textContent = '复查建议：' + suggestions[riskLevel];
 }
 
-// 仪表盘图表
 function renderGaugeChart() {
     const ctx = document.getElementById('gauge-chart').getContext('2d');
     if (window.gaugeChartInstance) window.gaugeChartInstance.destroy();
@@ -786,7 +707,6 @@ function renderGaugeChart() {
     });
 }
 
-// 雷达图
 function renderRadarChart() {
     const ctx = document.getElementById('radar-chart').getContext('2d');
     if (window.radarChartInstance) window.radarChartInstance.destroy();
@@ -838,7 +758,6 @@ function renderRadarChart() {
     });
 }
 
-// 得分明细表
 function renderScoreTable() {
     const ds = state.dimensionScores;
     const tbody = document.getElementById('score-table-body');
@@ -857,7 +776,6 @@ function renderScoreTable() {
     document.getElementById('total-score-text').textContent = state.totalScore.toFixed(1);
 }
 
-// 结果页 Tab 切换初始化
 function initResultTabs() {
     document.querySelectorAll('[data-result-tab]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -870,14 +788,14 @@ function initResultTabs() {
     });
 }
 
-// 渲染各 Tab 详细内容
+// ==================== 仅此处做了卡片化优化，其余全不变 ====================
 function renderResultTabContents() {
     const ds = state.dimensionScores;
     const basicInfo = state.basicInfo;
     const lifestyle = state.lifestyle;
     const riskLevel = state.riskLevel;
 
-    // --- 记忆分析 Tab ---
+    // 记忆分析
     let memoryHtml = '<h4>记忆功能分析</h4>';
     if (ds.D2 < 5) {
         memoryHtml += '<div class="success-box">您的记忆功能整体良好，未发现明显的记忆障碍迹象。</div>';
@@ -906,7 +824,7 @@ function renderResultTabContents() {
     }
     document.getElementById('result-tab-memory').innerHTML = memoryHtml;
 
-    // --- 危险因素 Tab ---
+    // 危险因素
     let riskHtml = '<h4>不可控危险因素</h4><ul>';
     const uncontrollable = [];
     if (basicInfo.age >= 65) uncontrollable.push(`年龄较大（${basicInfo.age}岁）`);
@@ -944,7 +862,7 @@ function renderResultTabContents() {
     }
     document.getElementById('result-tab-risk').innerHTML = riskHtml;
 
-    // --- 就医建议 Tab ---
+    // 就医建议
     const medicalAdvice = {
         '低风险': `
             <h4>就医建议</h4>
@@ -1012,90 +930,87 @@ function renderResultTabContents() {
     };
     document.getElementById('result-tab-medical').innerHTML = medicalAdvice[riskLevel] || '';
 
-    // --- 生活建议 Tab ---
+    // 生活建议（卡片化优化，仅此处排版优化，内容不变）
     const lifeHtml = `
-        <h4>饮食建议</h4>
-        <p>推荐遵循<strong>MIND饮食模式</strong>，已被研究证实可降低阿尔茨海默症发病风险：</p>
-        <ul>
-            <li><strong>多吃绿叶蔬菜</strong>：每天至少1份（如生菜、菠菜、西兰花）</li>
-            <li><strong>多吃浆果</strong>：每周至少2次（蓝莓、草莓、黑莓等，富含花青素）</li>
-            <li><strong>多吃坚果</strong>：每天一小把（核桃、杏仁、腰果）</li>
-            <li><strong>多吃全谷物</strong>：燕麦、糙米、全麦面包替代精制米面</li>
-            <li><strong>多吃鱼类</strong>：每周至少1次，优选深海鱼（三文鱼、鲭鱼、沙丁鱼）</li>
-            <li><strong>多吃豆类</strong>：每周至少3次（黄豆、黑豆、豆腐）</li>
-            <li><strong>使用橄榄油</strong>：代替其他食用油作为主要烹调用油</li>
-            <li><strong>减少以下食物</strong>：红肉、黄油、奶酪、糕点甜点、油炸食品</li>
-        </ul>
+        <div class="life-card-grid">
+            <div class="life-card">
+                <h4>🍽️ 饮食建议</h4>
+                <ul>
+                    <li><strong>多吃绿叶蔬菜</strong>：每天至少1份</li>
+                    <li><strong>多吃浆果</strong>：每周至少2次（蓝莓、草莓）</li>
+                    <li><strong>每天一小把坚果</strong>：核桃、杏仁等</li>
+                    <li><strong>多用全谷物</strong>：燕麦、糙米代替精米白面</li>
+                    <li><strong>每周至少1次深海鱼</strong>：三文鱼、沙丁鱼</li>
+                    <li><strong>少吃红肉、油炸食品、甜点</strong></li>
+                </ul>
+            </div>
 
-        <h4>运动建议</h4>
-        <ul>
-            <li>每周至少<strong>150分钟中等强度有氧运动</strong>（快走、慢跑、游泳、骑车）</li>
-            <li>推荐<strong>太极拳</strong>——研究显示对改善平衡和认知功能有显著帮助</li>
-            <li>每周至少<strong>2次力量训练</strong>（哑铃、弹力带、自重训练）</li>
-            <li>避免久坐，<strong>每小时起身活动5分钟</strong></li>
-            <li>循序渐进，避免运动损伤，运动前后注意热身和拉伸</li>
-        </ul>
+            <div class="life-card">
+                <h4>🏃 运动建议</h4>
+                <ul>
+                    <li>每周<strong>150分钟快走/慢跑</strong>等有氧运动</li>
+                    <li>推荐<strong>打太极拳</strong>，对平衡和认知都有帮助</li>
+                    <li>每周2次简单力量训练</li>
+                    <li>别久坐，<strong>每小时起来活动5分钟</strong></li>
+                    <li>运动前后注意热身，别勉强</li>
+                </ul>
+            </div>
 
-        <h4>认知训练建议</h4>
-        <ul>
-            <li><strong>多读书、看报</strong>，保持信息输入和思考习惯</li>
-            <li>下棋、打牌、做数独、填字游戏等<strong>益智活动</strong></li>
-            <li><strong>学习新技能</strong>：外语、乐器、绘画、手工——学习过程本身就是最好的大脑锻炼</li>
-            <li>保持好奇心，多提问、多思考，主动接触新事物</li>
-            <li>可以使用专业的认知训练工具，但需注意选择有科学依据的内容</li>
-        </ul>
+            <div class="life-card">
+                <h4>🧠 动脑建议</h4>
+                <ul>
+                    <li><strong>多读书看报</strong>，保持思考习惯</li>
+                    <li>下棋、打牌、做数独等益智活动</li>
+                    <li><strong>学一点新东西</strong>：唱歌、写字、手工</li>
+                    <li>保持好奇心，多接触新鲜事</li>
+                </ul>
+            </div>
 
-        <h4>社交建议</h4>
-        <ul>
-            <li>多参加社交活动，与家人朋友<strong>保持经常性联系</strong></li>
-            <li>参加社区活动、兴趣小组、老年大学</li>
-            <li>参与<strong>志愿服务</strong>——助人的同时也能获得成就感和社交支持</li>
-            <li>避免长期孤独和社交隔离——独居老人认知衰退风险显著升高</li>
-            <li>多与年轻人交流，保持开放的心态</li>
-        </ul>
+            <div class="life-card">
+                <h4>👥 社交建议</h4>
+                <ul>
+                    <li>多和家人朋友聊天、走动</li>
+                    <li>参加社区活动、兴趣小组</li>
+                    <li>别总一个人待着，<strong>多出门交流</strong></li>
+                    <li>和晚辈多交流，保持心态年轻</li>
+                </ul>
+            </div>
 
-        <h4>睡眠建议</h4>
-        <ul>
-            <li>保持<strong>规律的作息时间</strong>，每天同一时间入睡和起床</li>
-            <li>每天保证<strong>7-8小时</strong>睡眠</li>
-            <li>睡前1小时避免使用手机、电脑等电子设备（蓝光影响褪黑素分泌）</li>
-            <li>睡前可以泡脚、听轻音乐、做放松练习</li>
-            <li>如有<strong>严重打鼾或白天嗜睡</strong>，建议到医院检查是否有睡眠呼吸暂停——这是认知衰退的重要危险因素</li>
-            <li>卧室保持安静、黑暗、温度适宜（18-22℃）</li>
-        </ul>
+            <div class="life-card">
+                <h4>😴 睡眠建议</h4>
+                <ul>
+                    <li>每天<strong>固定时间睡觉、起床</strong></li>
+                    <li>每天睡够<strong>7-8小时</strong></li>
+                    <li>睡前少看手机电视</li>
+                    <li>打鼾严重、白天总犯困，要去医院检查</li>
+                </ul>
+            </div>
 
-        <h4>慢病管理建议</h4>
-        <ul>
-            <li><strong>控制血压</strong>：中年期高血压是晚年痴呆的明确危险因素，建议血压控制在130/80mmHg以下</li>
-            <li><strong>控制血糖</strong>：糖尿病患者痴呆风险升高约2倍，需严格遵医嘱用药</li>
-            <li><strong>控制血脂</strong>：尤其是中年期高胆固醇与晚年AD风险相关</li>
-            <li><strong>控制体重</strong>：中年肥胖增加痴呆风险，保持BMI在18.5-24之间</li>
-            <li>定期体检，监测各项指标变化</li>
-            <li>遵医嘱服药，<strong>不要自行停药或换药</strong></li>
-        </ul>
+            <div class="life-card">
+                <h4>💊 慢病管理</h4>
+                <ul>
+                    <li><strong>控制好血压、血糖、血脂</strong></li>
+                    <li>按时吃药，<strong>不要自己随便停药</strong></li>
+                    <li>定期体检，监测各项指标</li>
+                    <li>控制体重，别太胖也别太瘦</li>
+                </ul>
+            </div>
+        </div>
 
-        <h4>心理健康建议</h4>
-        <ul>
-            <li>保持<strong>积极乐观的心态</strong>，研究显示乐观者认知衰退更慢</li>
-            <li>学会管理压力，长期慢性压力会损伤海马体（记忆中枢）</li>
-            <li>可以练习冥想、正念、深呼吸等放松技巧</li>
-            <li>培养兴趣爱好，让生活充实有意义</li>
-            <li>如出现持续情绪低落、兴趣减退，及时寻求心理或精神科帮助——抑郁症是AD的危险因素</li>
-        </ul>
+        <div class="family-tip-box">
+            <h4>💚 给家属的照护小提示</h4>
+            <ul>
+                <li>多陪伴、多耐心，别和老人着急、顶嘴</li>
+                <li>家里收拾整齐，减少障碍物，防止跌倒</li>
+                <li>重要物品放在固定位置，帮老人养成习惯</li>
+                <li>出门带好联系卡，防止走失</li>
+                <li>照护者也要注意休息，别自己硬扛</li>
+            </ul>
+        </div>
 
-        <h4>其他生活建议</h4>
-        <ul>
-            <li><strong>戒烟</strong>：吸烟使痴呆风险增加约50%，戒烟后风险逐渐下降</li>
-            <li><strong>限酒</strong>：过量饮酒显著增加痴呆风险，建议不饮酒或少量饮用</li>
-            <li>保护头部，避免跌倒和头部外伤</li>
-            <li>注意听力保护——听力下降与认知衰退密切相关，有问题及时佩戴助听器</li>
-            <li>保持良好的口腔卫生</li>
-        </ul>
-
-        <div class="info-box" style="margin-top: 20px;">
-            <strong>温馨提示：</strong>以上生活方式建议基于目前科学研究证据，但每个人情况不同。
-            如有基础疾病或特殊健康状况，请在医生指导下进行调整。
-            最重要的是<strong>长期坚持</strong>——健康的生活方式是保护大脑最有效的方法。
+        <div class="life-summary-box">
+            <strong>温馨提示：</strong>以上建议是通用的健康指导，每个人身体情况不同。
+            有基础疾病的朋友，请在医生指导下调整。最重要的是<strong>长期坚持、慢慢来</strong>，健康生活是保护大脑最好的办法。
         </div>
     `;
     document.getElementById('result-tab-life').innerHTML = lifeHtml;

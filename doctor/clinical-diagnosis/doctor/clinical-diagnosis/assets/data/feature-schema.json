@@ -1,0 +1,57 @@
+{
+  "api_url": "/api/ad/predict",
+  "description": "医生端临床检查预测页面字段定义。CDR 不作为输入；CDRGLOB 只作为训练时的严重程度标签。",
+  "required_core_fields": [
+    "age",
+    "sex",
+    "educ",
+    "mmse",
+    "moca",
+    "faq_sum"
+  ],
+  "recommended_fields": [
+    "animals",
+    "trailb",
+    "memory_score",
+    "npi_symptom_sum",
+    "npi_severity_sum",
+    "depression",
+    "thyroid",
+    "b12_def",
+    "diabetes",
+    "hypertension",
+    "hypercholesterol"
+  ],
+  "optional_advanced_fields": [
+    "apoe4",
+    "abeta42",
+    "total_tau",
+    "p_tau",
+    "stroke_tia",
+    "bmi",
+    "bpsys",
+    "bpdias",
+    "family_history"
+  ],
+  "excluded_fields": [
+    "CDRGLOB",
+    "CDRSUM",
+    "MEMORY",
+    "ORIENT",
+    "JUDGMENT",
+    "COMMUN",
+    "HOMEHOBB",
+    "PERSCARE"
+  ],
+  "expected_response": {
+    "risk_probability": "0-1 float",
+    "risk_level": "低风险/中风险/高风险",
+    "binary_prediction": "非痴呆/痴呆",
+    "cognitive_state": "正常认知/MCI/痴呆",
+    "severity_stage": "无痴呆/极轻度/轻度/中度/重度",
+    "diagnosis_summary": "string",
+    "factors": [
+      "string"
+    ]
+  }
+}

@@ -90,7 +90,7 @@
                     <div class="form-col">
                         <div class="form-group">
                             <label>您的年龄：<span id="age-value">65</span>岁</label>
-                            <input type="range" id="age" min="40" max="100" value="65" class="slider">
+                            <input type="range" id="age" min="0" max="100" value="65" class="slider">
                         </div>
                         <div class="form-group">
                             <label>您的性别</label>
@@ -320,7 +320,7 @@
                 <div id="symptom-error" class="error-box" style="display: none;"></div>
             </div>
 
-            <!-- 步骤3：认知测试 -->
+            <!-- 步骤3：认知测试（纯文字版，无图形） -->
             <div class="step" id="step-3">
                 <h1>第三步：认知功能小测试</h1>
                 <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
@@ -383,34 +383,34 @@
                     <button class="btn btn-primary" onclick="submitFluencyTest()">提交答案</button>
                 </div>
 
-               <div class="test-step" id="test-3">
-    <h3>测试4：视空间与定向能力</h3>
-    <p>请根据题目描述，选择最恰当的答案。</p>
+                <div class="test-step" id="test-3">
+                    <h3>测试4：视空间与定向能力</h3>
+                    <p>请根据题目描述，选择最恰当的答案。</p>
 
-    <h4>第1题：方位判断</h4>
-    <p>您站在自家客厅正中间，面朝大门（朝南）。已知您的左手边是厨房，右手边是卧室。
-       请问您转过身去（面朝北）时，您的左手边是什么房间？</p>
-    <div class="radio-group">
-        <label><input type="radio" name="spatial_q1" value="A"> A. 厨房</label>
-        <label><input type="radio" name="spatial_q1" value="B"> B. 卧室</label>
-        <label><input type="radio" name="spatial_q1" value="C"> C. 大门</label>
-        <label><input type="radio" name="spatial_q1" value="D"> D. 阳台</label>
-    </div>
+                    <h4>第1题：方位判断</h4>
+                    <p>您站在自家客厅正中间，面朝大门（朝南）。已知您的左手边是厨房，右手边是卧室。
+                       请问您转过身去（面朝北）时，您的左手边是什么房间？</p>
+                    <div class="radio-group">
+                        <label><input type="radio" name="spatial_q1" value="A"> A. 厨房</label>
+                        <label><input type="radio" name="spatial_q1" value="B"> B. 卧室</label>
+                        <label><input type="radio" name="spatial_q1" value="C"> C. 大门</label>
+                        <label><input type="radio" name="spatial_q1" value="D"> D. 阳台</label>
+                    </div>
 
-    <hr>
-    <h4>第2题：时间与路径推算</h4>
-    <p>您从家出发去超市，去程需要步行15分钟。超市购物需要20分钟，回家路上比去程多花5分钟。
-       如果您上午10点整从家里出发，请问您大约几点能回到家？</p>
-    <div class="radio-group">
-        <label><input type="radio" name="clock_q1" value="A"> A. 10点35分</label>
-        <label><input type="radio" name="clock_q1" value="B"> B. 10点50分</label>
-        <label><input type="radio" name="clock_q1" value="C"> C. 10点45分</label>
-        <label><input type="radio" name="clock_q1" value="D"> D. 11点整</label>
-    </div>
+                    <hr>
+                    <h4>第2题：时间与路径推算</h4>
+                    <p>您从家出发去超市，去程需要步行15分钟。超市购物需要20分钟，回家路上比去程多花5分钟。
+                       如果您上午10点整从家里出发，请问您大约几点能回到家？</p>
+                    <div class="radio-group">
+                        <label><input type="radio" name="clock_q1" value="A"> A. 10点35分</label>
+                        <label><input type="radio" name="clock_q1" value="B"> B. 10点50分</label>
+                        <label><input type="radio" name="clock_q1" value="C"> C. 10点45分</label>
+                        <label><input type="radio" name="clock_q1" value="D"> D. 11点整</label>
+                    </div>
 
-    <button class="btn btn-primary" onclick="submitSpatialTest()">提交并进入下一个测试</button>
-    <div id="spatial-error" class="error-box" style="display: none;"></div>
-</div>
+                    <button class="btn btn-primary" onclick="submitSpatialTest()">提交并进入下一个测试</button>
+                    <div id="spatial-error" class="error-box" style="display: none;"></div>
+                </div>
 
                 <div class="test-step" id="test-4">
                     <h3>测试5：定向力测试</h3>
@@ -704,61 +704,7 @@
                 <div class="tab-content active" id="result-tab-memory"></div>
                 <div class="tab-content" id="result-tab-risk"></div>
                 <div class="tab-content" id="result-tab-medical"></div>
-                <div class="tab-content" id="result-tab-life">
-                    <h4>饮食建议</h4>
-                    <p>推荐遵循MIND饮食模式：</p>
-                    <ul>
-                        <li>多吃绿叶蔬菜（每天至少1份）</li>
-                        <li>多吃浆果（每周至少2次）</li>
-                        <li>多吃坚果（每天一小把）</li>
-                        <li>多吃全谷物</li>
-                        <li>多吃鱼类（每周至少1次）</li>
-                        <li>多吃豆类</li>
-                        <li>用橄榄油代替其他食用油</li>
-                        <li>减少红肉、黄油、奶酪、糕点和油炸食品</li>
-                    </ul>
-
-                    <h4>运动建议</h4>
-                    <ul>
-                        <li>建议每周至少150分钟中等强度有氧运动</li>
-                        <li>推荐运动：快走、慢跑、游泳、太极拳</li>
-                        <li>每周至少2次力量训练</li>
-                        <li>避免久坐，每小时起身活动5分钟</li>
-                    </ul>
-
-                    <h4>认知训练建议</h4>
-                    <ul>
-                        <li>多读书、看报、学习新知识</li>
-                        <li>下棋、打牌、做数独等益智游戏</li>
-                        <li>学习新技能（如外语、乐器、绘画）</li>
-                        <li>保持好奇心，多思考</li>
-                    </ul>
-
-                    <h4>社交建议</h4>
-                    <ul>
-                        <li>多参加社交活动，与家人朋友保持联系</li>
-                        <li>参加社区活动、兴趣小组</li>
-                        <li>志愿服务</li>
-                        <li>避免孤独和隔离</li>
-                    </ul>
-
-                    <h4>睡眠建议</h4>
-                    <ul>
-                        <li>保持规律的作息时间</li>
-                        <li>每天7-8小时睡眠</li>
-                        <li>睡前避免使用电子设备</li>
-                        <li>如有打鼾严重或白天嗜睡，建议检查睡眠呼吸暂停</li>
-                    </ul>
-
-                    <h4>其他建议</h4>
-                    <ul>
-                        <li>戒烟限酒</li>
-                        <li>控制体重</li>
-                        <li>管理好血压、血糖、血脂</li>
-                        <li>保持积极乐观的心态</li>
-                        <li>减少压力</li>
-                    </ul>
-                </div>
+                <div class="tab-content" id="result-tab-life"></div>
 
                 <hr>
                 <div class="result-buttons">

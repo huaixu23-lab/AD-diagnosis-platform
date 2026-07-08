@@ -1,0 +1,411 @@
+.basic-diagnosis-page {
+  display: grid;
+  gap: 22px;
+}
+
+.basic-diagnosis-page .assessment-hero {
+  margin-bottom: 0;
+}
+
+.basic-diagnosis-page .assessment-panel {
+  padding: 28px;
+}
+
+.basic-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field-item {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  color: var(--mist-900);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.field-item input,
+.field-item select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid rgba(80, 112, 118, 0.22);
+  border-radius: var(--radius);
+  outline: none;
+  background: rgba(255, 255, 255, 0.54);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.field-item input:focus,
+.field-item select:focus {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 0 0 3px rgba(95, 123, 128, 0.12);
+}
+
+.symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.symptom-card {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 11px;
+  min-height: 210px;
+  padding: 18px;
+  border: 1px solid rgba(80, 112, 118, 0.18);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(252, 253, 250, 0.6), rgba(229, 238, 237, 0.34)),
+    rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 26px rgba(38, 56, 59, 0.08);
+}
+
+.symptom-card-head {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(80, 112, 118, 0.13);
+}
+
+.symptom-card h3 {
+  margin: 0;
+  color: var(--mist-900);
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.symptom-card-head span {
+  color: var(--mist-500);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.symptom-card label,
+.red-flag-list label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.symptom-card input,
+.red-flag-list input {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  accent-color: var(--mist-700);
+  flex: 0 0 auto;
+}
+
+.functional-card label {
+  align-items: flex-start;
+}
+
+.red-flag-panel {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.2fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.red-flag-copy p {
+  position: relative;
+  z-index: 1;
+  margin: -6px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+
+.red-flag-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(80, 112, 118, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.assessment-button {
+  margin-top: 0;
+  min-width: 180px;
+  cursor: pointer;
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 10px 14px;
+  border: 1px solid rgba(80, 112, 118, 0.18);
+  border-radius: var(--radius);
+  background: rgba(230, 237, 235, 0.5);
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.assessment-button:hover,
+.secondary-button:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.report-panel {
+  scroll-margin-top: 92px;
+}
+
+.report-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(80, 112, 118, 0.14);
+}
+
+.report-head h2 {
+  margin: 0;
+  color: var(--mist-900);
+  font-size: 26px;
+}
+
+.report-head .module-eyebrow {
+  margin-bottom: 12px;
+}
+
+.report-head p {
+  max-width: 440px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.65;
+  text-align: right;
+}
+
+.demo-badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 16px;
+  padding: 7px 10px;
+  border: 1px solid rgba(80, 112, 118, 0.18);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.42);
+  color: var(--mist-700);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.report-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+}
+
+.report-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.clinical-summary-card {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid rgba(80, 112, 118, 0.18);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(145deg, rgba(252, 253, 250, 0.76), rgba(224, 236, 234, 0.54)),
+    rgba(255, 255, 255, 0.3);
+  box-shadow: 0 16px 34px rgba(38, 56, 59, 0.1);
+}
+
+.clinical-summary-card h3,
+.system-description-card h3 {
+  margin: 0 0 14px;
+  color: var(--mist-900);
+  font-size: 20px;
+}
+
+.summary-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.summary-card-grid section {
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid rgba(80, 112, 118, 0.13);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.summary-card-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--mist-700);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.summary-card-grid p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.report-section-title {
+  position: relative;
+  z-index: 1;
+  margin: 20px 0 12px;
+  color: var(--mist-900);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.report-block {
+  padding: 16px 18px;
+  border: 1px solid rgba(80, 112, 118, 0.15);
+  border-left: 4px solid var(--mist-700);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.report-block h3 {
+  margin: 0 0 8px;
+  color: var(--mist-900);
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.report-block p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+
+.patient-info-block {
+  border-left-color: var(--mist-500);
+}
+
+.impression-block {
+  border-left-color: var(--mist-900);
+  background: rgba(237, 245, 243, 0.58);
+}
+
+.doctor-note-card,
+.system-description-card {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(80, 112, 118, 0.16);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.doctor-note-card label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--mist-900);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.doctor-note-card textarea {
+  width: 100%;
+  min-height: 118px;
+  padding: 12px;
+  border: 1px solid rgba(80, 112, 118, 0.22);
+  border-radius: var(--radius);
+  outline: none;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.75;
+}
+
+.doctor-note-card textarea:focus {
+  border-color: var(--line-strong);
+  box-shadow: 0 0 0 3px rgba(95, 123, 128, 0.12);
+}
+
+.system-description-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+@media (max-width: 980px) {
+  .basic-form-grid,
+  .symptom-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .red-flag-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .basic-diagnosis-page .assessment-panel {
+    padding: 22px;
+  }
+
+  .basic-form-grid,
+  .symptom-grid,
+  .red-flag-list,
+  .summary-card-grid,
+  .report-grid-two {
+    grid-template-columns: 1fr;
+  }
+
+  .action-row,
+  .report-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .assessment-button,
+  .secondary-button {
+    width: 100%;
+  }
+
+  .report-head p {
+    text-align: left;
+  }
+}

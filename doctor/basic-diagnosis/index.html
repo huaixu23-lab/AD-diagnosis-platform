@@ -1,37 +1,276 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>初步诊断</title>
-  <link rel="stylesheet" href="../../css/common.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>临床症状初步评估 - Clinical Symptom Assessment</title>
+  <link rel="stylesheet" href="../../css/common.css" />
+  <link rel="stylesheet" href="./basic-diagnosis.css" />
 </head>
-<body>
+<body class="page-bg-doctor">
 
   <header class="site-header">
-    <div class="logo">初步诊断</div>
+    <div class="logo">临床症状初步评估</div>
     <nav class="nav-links">
       <a href="../../index.html">首页</a>
       <a href="../index.html">医生工作台</a>
-      <a href="../clinical-diagnosis/index.html">进一步诊断</a>
-      <a href="../imaging-diagnosis/index.html">影像诊断</a>
+      <a href="../clinical-diagnosis/index.html">进一步评估</a>
+      <a href="../imaging-diagnosis/index.html">影像评估</a>
       <a href="../treatment/index.html">治疗方案</a>
     </nav>
   </header>
 
-  <main class="page-container">
-    <section class="module-placeholder">
-      <span class="module-eyebrow">Intake Layer</span>
-      <h1>初步诊断模块</h1>
-      <p>
-        该模块用于整理年龄、病史、记忆模式与功能变化，形成阿尔茨海默病早期风险评估和后续检查建议。
-      </p>
+  <main class="page-container basic-diagnosis-page">
+    <section class="hero floating-panel assessment-hero">
+      <div class="hero-content hero-panel">
+        <span class="hero-tag">Clinical Symptom Assessment</span>
+        <h1>临床症状初步评估</h1>
+        <p>
+          基于临床症状标准化和医学规则，为医生提供阿尔茨海默病相关表现辅助分析。
+        </p>
+      </div>
+    </section>
 
-      <div class="notice">
-        此页面后续可扩展为表单录入、初筛逻辑与结构化结果展示。
+    <section class="floating-panel content-panel assessment-panel">
+      <h2 class="section-title">患者基本信息 <span>Patient Profile</span></h2>
+      <div class="basic-form-grid">
+        <label class="field-item">
+          <span>患者编号</span>
+          <input id="patientId" type="text" placeholder="如 P20260708001" autocomplete="off" />
+        </label>
+
+        <label class="field-item">
+          <span>年龄</span>
+          <input id="patientAge" type="number" min="40" max="110" placeholder="如 68" />
+        </label>
+
+        <label class="field-item">
+          <span>性别</span>
+          <select id="patientGender">
+            <option value="">请选择</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+            <option value="未说明">未说明</option>
+          </select>
+        </label>
+
+        <label class="field-item">
+          <span>受教育程度</span>
+          <select id="education">
+            <option value="">请选择</option>
+            <option value="小学及以下">小学及以下</option>
+            <option value="中学">中学</option>
+            <option value="高中">高中</option>
+            <option value="大学及以上">大学及以上</option>
+          </select>
+        </label>
+
+        <label class="field-item">
+          <span>症状病程</span>
+          <select id="course">
+            <option value="">请选择</option>
+            <option value="<6个月">&lt;6个月</option>
+            <option value="6个月-1年">6个月-1年</option>
+            <option value=">1年">&gt;1年</option>
+          </select>
+        </label>
+
+        <label class="field-item">
+          <span>起病方式</span>
+          <select id="onset">
+            <option value="">请选择</option>
+            <option value="缓慢进展">缓慢进展</option>
+            <option value="突然出现">突然出现</option>
+            <option value="不明确">不明确</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="floating-panel content-panel assessment-panel">
+      <h2 class="section-title">患者临床表现 <span>Symptom Intake</span></h2>
+      <div class="symptom-grid" aria-label="临床症状分类录入">
+        <article class="symptom-card" data-domain="memory_impairment">
+          <div class="symptom-card-head">
+            <h3>记忆功能变化</h3>
+            <span>memory_impairment</span>
+          </div>
+          <label><input type="checkbox" value="近期记忆下降" />近期记忆下降</label>
+          <label><input type="checkbox" value="忘记刚发生事情" />忘记刚发生事情</label>
+          <label><input type="checkbox" value="重复询问" />重复询问</label>
+          <label><input type="checkbox" value="新信息学习困难" />学习新信息困难</label>
+        </article>
+
+        <article class="symptom-card" data-domain="executive_dysfunction">
+          <div class="symptom-card-head">
+            <h3>执行功能变化</h3>
+            <span>executive_dysfunction</span>
+          </div>
+          <label><input type="checkbox" value="计划能力下降" />计划能力下降</label>
+          <label><input type="checkbox" value="处理复杂任务困难" />处理复杂任务困难</label>
+          <label><input type="checkbox" value="财务管理困难" />财务管理困难</label>
+          <label><input type="checkbox" value="解决问题能力下降" />解决问题能力下降</label>
+        </article>
+
+        <article class="symptom-card" data-domain="language_impairment">
+          <div class="symptom-card-head">
+            <h3>语言功能变化</h3>
+            <span>language_impairment</span>
+          </div>
+          <label><input type="checkbox" value="找词困难" />找词困难</label>
+          <label><input type="checkbox" value="表达困难" />表达困难</label>
+          <label><input type="checkbox" value="理解能力下降" />理解能力下降</label>
+        </article>
+
+        <article class="symptom-card" data-domain="visuospatial_impairment">
+          <div class="symptom-card-head">
+            <h3>视觉空间能力变化</h3>
+            <span>visuospatial_impairment</span>
+          </div>
+          <label><input type="checkbox" value="容易迷路" />容易迷路</label>
+          <label><input type="checkbox" value="方向判断困难" />方向判断困难</label>
+          <label><input type="checkbox" value="空间定位困难" />空间定位困难</label>
+        </article>
+
+        <article class="symptom-card" data-domain="behavioral_symptoms">
+          <div class="symptom-card-head">
+            <h3>行为精神表现</h3>
+            <span>behavioral_symptoms</span>
+          </div>
+          <label><input type="checkbox" value="情绪变化" />情绪变化</label>
+          <label><input type="checkbox" value="行为异常" />行为异常</label>
+          <label><input type="checkbox" value="兴趣下降" />兴趣下降</label>
+        </article>
+
+        <article class="symptom-card functional-card" data-domain="functional_decline">
+          <div class="symptom-card-head">
+            <h3>功能影响</h3>
+          <span>functional_decline</span>
+          </div>
+          <label><input type="radio" name="functionalDecline" value="0" data-text="无明显功能影响" checked />0：无明显功能影响</label>
+          <label><input type="radio" name="functionalDecline" value="1" data-text="复杂活动困难" />1：复杂活动困难</label>
+          <label><input type="radio" name="functionalDecline" value="2" data-text="工具性生活活动受影响" />2：工具性生活活动受影响</label>
+          <label><input type="radio" name="functionalDecline" value="3" data-text="基本生活活动受影响" />3：基本生活活动受影响</label>
+        </article>
+      </div>
+    </section>
+
+    <section class="floating-panel content-panel assessment-panel red-flag-panel">
+      <div class="red-flag-copy">
+        <h2 class="section-title">需要关注的临床提示 <span>Differential Clues</span></h2>
+        <p>用于辅助鉴别其他认知障碍情况。</p>
+      </div>
+      <div class="red-flag-list">
+        <label><input type="checkbox" value="快速认知下降" />快速认知下降</label>
+        <label><input type="checkbox" value="视觉幻觉" />视觉幻觉</label>
+        <label><input type="checkbox" value="明显行为改变" />明显行为改变</label>
+        <label><input type="checkbox" value="卒中相关病史" />卒中相关病史</label>
+        <label><input type="checkbox" value="意识波动" />意识波动</label>
+      </div>
+    </section>
+
+    <section class="action-row">
+      <button id="analyzeBtn" class="primary-button assessment-button" type="button">生成临床症状辅助评估报告</button>
+      <button id="resetBtn" class="secondary-button" type="button">重新填写</button>
+    </section>
+
+    <section id="resultPanel" class="floating-panel content-panel assessment-panel report-panel" hidden>
+      <div class="report-head">
+        <div>
+          <span class="module-eyebrow">Clinical Report</span>
+          <h2>临床症状辅助评估报告</h2>
+        </div>
+        <p id="reportMeta">请完成临床症状分析。</p>
+      </div>
+      <div id="demoBadge" class="demo-badge">Synthetic demonstration case</div>
+
+      <article class="clinical-summary-card">
+        <h3>临床摘要卡片</h3>
+        <div class="summary-card-grid">
+          <section>
+            <span>主要临床表现</span>
+            <p id="summaryCardPresentation"></p>
+          </section>
+          <section>
+            <span>主要受累领域</span>
+            <p id="summaryCardDomain"></p>
+          </section>
+          <section>
+            <span>当前评估方向</span>
+            <p id="summaryCardDirection"></p>
+          </section>
+          <section>
+            <span>建议下一步</span>
+            <p id="summaryCardNext"></p>
+          </section>
+        </div>
+      </article>
+
+      <div class="report-section-title">分析模块卡片</div>
+      <div class="report-grid report-grid-two">
+        <article class="report-block patient-info-block">
+          <h3>患者基本信息</h3>
+          <p id="patientInfoText"></p>
+        </article>
+        <article class="report-block">
+          <h3>当前临床表现总结</h3>
+          <p id="summaryText"></p>
+        </article>
+        <article class="report-block">
+          <h3>主要认知领域分析</h3>
+          <p id="domainText"></p>
+        </article>
+        <article class="report-block">
+          <h3>AD相关临床模式分析</h3>
+          <p id="patternText"></p>
+        </article>
+        <article class="report-block">
+          <h3>疾病阶段辅助评估</h3>
+          <p id="stageText"></p>
+        </article>
+        <article class="report-block impression-block">
+          <h3>初步临床印象</h3>
+          <p id="overallImpressionText"></p>
+        </article>
+        <article class="report-block">
+          <h3>需要关注的鉴别方向</h3>
+          <p id="differentialText"></p>
+        </article>
+      </div>
+
+      <div class="report-section-title">行动建议卡片</div>
+      <div class="report-grid report-grid-two">
+        <article class="report-block">
+          <h3>建议进一步完善的评估项目</h3>
+          <p id="examText"></p>
+        </article>
+        <article class="report-block">
+          <h3>专科评估建议</h3>
+          <p id="specialistText"></p>
+        </article>
+        <article class="report-block">
+          <h3>后续问诊建议</h3>
+          <p id="interviewText"></p>
+        </article>
+        <article class="report-block">
+          <h3>判断依据</h3>
+          <p id="evidenceText"></p>
+        </article>
+      </div>
+
+      <div class="doctor-note-card">
+        <label for="doctorNote">医生补充备注</label>
+        <textarea id="doctorNote" placeholder="请输入问诊补充信息、家属描述或查体结果。"></textarea>
+      </div>
+
+      <div class="system-description-card">
+        <h3>系统说明</h3>
+        <p id="systemDescriptionText"></p>
       </div>
     </section>
   </main>
 
-</body>
+    <script src="./config.js"></script>
+    <script src="./basic-diagnosis.js"></script>
+  </body>
 </html>

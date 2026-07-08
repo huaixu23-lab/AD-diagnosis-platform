@@ -1,0 +1,59 @@
+﻿Input_Condition,Generated_Feature,Encoding_Value,Evidence_Source
+医生输入或患者表达包含：最近发生的事总记不住；对应标准术语：情景记忆损害,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Episodic memory impairment
+医生输入或患者表达包含：刚经历过的事情转头就忘；对应标准术语：情景记忆损害,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Episodic memory impairment
+医生输入或患者表达包含：最近总忘刚发生的事情；对应标准术语：情景记忆损害,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Episodic memory impairment
+医生输入或患者表达包含：刚聊过的内容很快想不起来；对应标准术语：情景记忆损害,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Episodic memory impairment
+医生输入或患者表达包含：最近总忘事情；对应标准术语：近期记忆下降,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Recent memory loss
+医生输入或患者表达包含：近来的事情记不住；对应标准术语：近期记忆下降,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Recent memory loss
+医生输入或患者表达包含：刚说过的话马上忘；对应标准术语：近期记忆下降,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Recent memory loss
+医生输入或患者表达包含：最近记性明显变差；对应标准术语：近期记忆下降,memory_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Recent memory loss
+医生输入或患者表达包含：以前能安排的事情现在安排不好；对应标准术语：执行功能障碍,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Executive dysfunction
+医生输入或患者表达包含：做事情没有以前有条理；对应标准术语：执行功能障碍,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Executive dysfunction
+医生输入或患者表达包含：处理复杂事情变得困难；对应标准术语：执行功能障碍,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Executive dysfunction
+医生输入或患者表达包含：多步骤任务容易乱；对应标准术语：执行功能障碍,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Executive dysfunction
+医生输入或患者表达包含：不会安排一天的事情；对应标准术语：计划能力下降,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Impaired planning
+医生输入或患者表达包含：出门前准备总是漏东西；对应标准术语：计划能力下降,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Impaired planning
+医生输入或患者表达包含：计划家务或行程变困难；对应标准术语：计划能力下降,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Impaired planning
+医生输入或患者表达包含：以前能规划的事情现在做不好；对应标准术语：计划能力下降,executive_dysfunction,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Impaired planning
+医生输入或患者表达包含：说话时总找不到合适的词；对应标准术语：找词困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Word-finding difficulty
+医生输入或患者表达包含：想说的话卡在嘴边；对应标准术语：找词困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Word-finding difficulty
+医生输入或患者表达包含：经常用那个东西代替名字；对应标准术语：找词困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Word-finding difficulty
+医生输入或患者表达包含：说话会停下来想词；对应标准术语：找词困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Word-finding difficulty
+医生输入或患者表达包含：常叫不出熟悉物品的名字；对应标准术语：命名困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Anomia
+医生输入或患者表达包含：看到东西说不出叫什么；对应标准术语：命名困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Anomia
+医生输入或患者表达包含：熟人的名字一时想不起来；对应标准术语：命名困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Anomia
+医生输入或患者表达包含：命名物品明显变困难；对应标准术语：命名困难,language_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Anomia
+医生输入或患者表达包含：出现视觉空间能力受损；对应标准术语：视觉空间能力受损,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visuospatial impairment
+医生输入或患者表达包含：家属反映有视觉空间能力受损；对应标准术语：视觉空间能力受损,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visuospatial impairment
+医生输入或患者表达包含：门诊描述为视觉空间能力受损；对应标准术语：视觉空间能力受损,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visuospatial impairment
+医生输入或患者表达包含：出现空间导航困难；对应标准术语：空间导航困难,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Navigation difficulty
+医生输入或患者表达包含：家属反映有空间导航困难；对应标准术语：空间导航困难,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Navigation difficulty
+医生输入或患者表达包含：门诊描述为空间导航困难；对应标准术语：空间导航困难,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Navigation difficulty
+医生输入或患者表达包含：分不清自己在什么位置；对应标准术语：地形定向障碍,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Topographical disorientation
+医生输入或患者表达包含：熟悉街区也会迷失方向；对应标准术语：地形定向障碍,visuospatial_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Topographical disorientation
+医生输入或患者表达包含：注意力很难集中；对应标准术语：注意功能受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Attentional impairment
+医生输入或患者表达包含：说话时容易走神；对应标准术语：注意功能受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Attentional impairment
+医生输入或患者表达包含：做事经常被打断后接不上；对应标准术语：注意功能受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Attentional impairment
+医生输入或患者表达包含：看电视或聊天不能持续注意；对应标准术语：注意功能受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Attentional impairment
+医生输入或患者表达包含：看东西时容易漏掉一部分；对应标准术语：视觉注意受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visual attention impairment
+医生输入或患者表达包含：在复杂场景里找不到目标；对应标准术语：视觉注意受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visual attention impairment
+医生输入或患者表达包含：视觉搜索变慢；对应标准术语：视觉注意受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visual attention impairment
+医生输入或患者表达包含：看图或找物品时注意力跟不上；对应标准术语：视觉注意受损,attention_impairment,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Visual attention impairment
+医生输入或患者表达包含：对以前喜欢的事情不感兴趣；对应标准术语：淡漠,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Apathy
+医生输入或患者表达包含：整天不想做事；对应标准术语：淡漠,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Apathy
+医生输入或患者表达包含：主动性明显下降；对应标准术语：淡漠,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Apathy
+医生输入或患者表达包含：家属觉得他变得很淡漠；对应标准术语：淡漠,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Apathy
+医生输入或患者表达包含：容易烦躁坐立不安；对应标准术语：激越,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Agitation
+医生输入或患者表达包含：最近常无故发脾气；对应标准术语：激越,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Agitation
+医生输入或患者表达包含：情绪激动难以安抚；对应标准术语：激越,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Agitation
+医生输入或患者表达包含：晚上或陌生环境下特别焦躁；对应标准术语：激越,behavioral_symptoms,1,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Agitation
+医生输入或患者表达包含：做饭、购物、管钱这些事变困难；对应标准术语：工具性日常生活能力受损,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Instrumental ADL impairment
+医生输入或患者表达包含：复杂日常事务需要家属帮忙；对应标准术语：工具性日常生活能力受损,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Instrumental ADL impairment
+医生输入或患者表达包含：以前能独立完成的生活事务现在做不好；对应标准术语：工具性日常生活能力受损,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Instrumental ADL impairment
+医生输入或患者表达包含：家里日常安排开始依赖别人；对应标准术语：工具性日常生活能力受损,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Instrumental ADL impairment
+医生输入或患者表达包含：经常忘记吃药或吃重复；对应标准术语：用药管理困难,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Medication management difficulty
+医生输入或患者表达包含：药盒不会按时整理；对应标准术语：用药管理困难,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Medication management difficulty
+医生输入或患者表达包含：需要家属提醒用药；对应标准术语：用药管理困难,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Medication management difficulty
+医生输入或患者表达包含：药怎么吃最近总弄错；对应标准术语：用药管理困难,functional_decline,1-3 according to functional impact level,Derived from AD_clinical_diagnostic_knowledge_base_v3_CN.csv standard term: Medication management difficulty
+未采集到对应认知域或功能域阳性症状,all binary features,0,Default encoding rule for absent clinical feature in doctor input form
+医生选择功能影响等级0、1、2、3,functional_decline,0=no functional impairment; 1=complex activity limitation; 2=instrumental ADL impairment; 3=basic ADL impairment,Linked to AD_functional_impact_dictionary_CN.csv

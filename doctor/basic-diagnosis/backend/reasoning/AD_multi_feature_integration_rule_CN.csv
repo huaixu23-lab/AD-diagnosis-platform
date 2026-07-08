@@ -1,0 +1,13 @@
+﻿Combination_ID,Feature_Profile,Clinical_Summary_CN,Possible_Interpretation_CN,Priority
+AD_COMBO_001,memory_impairment=0; functional_decline=0; no red flags,未见明确核心认知域受损和功能下降。,更符合正常老化、轻微主诉或信息不足场景，建议记录基线并随访症状变化。,Low
+AD_COMBO_002,memory_impairment=1; functional_decline=0; progressive=0 or unknown,患者存在记忆相关主诉，但未见明确功能影响。,可作为主观认知下降或早期认知变化线索，需通过客观认知评估确认。,Medium
+AD_COMBO_003,memory_impairment=1; functional_decline<=1; progressive=1,患者存在进展性记忆下降，基本生活能力相对保留。,提示可能符合AD相关轻度认知障碍评估场景，建议进行MoCA/MMSE和神经心理测评。,High
+AD_COMBO_004,memory_impairment=1; executive_dysfunction=1; functional_decline=2,患者存在记忆和执行功能受损，并伴工具性生活活动受损。,提示需要进一步评估早期AD相关痴呆综合征，同时排除血管性、抑郁相关或其他原因。,High
+AD_COMBO_005,memory_impairment=1; executive_dysfunction=1; language_impairment=1 or visuospatial_impairment=1; functional_decline>=2,患者存在多认知域受损，并伴明确日常生活能力下降。,提示需要进一步评估AD相关痴呆阶段认知障碍，并进行结构影像学和必要的AD相关生物标志物评估。,High
+AD_COMBO_006,language_impairment=1; memory_impairment=0 or mild; early language-predominant presentation,患者以语言困难为突出表现，记忆下降不明显或非主导。,提示非典型AD或原发性进行性失语相关疾病鉴别场景，需要详细语言和神经心理评估。,High
+AD_COMBO_007,visuospatial_impairment=1; memory_impairment=0 or mild; functional_decline>=1,患者以视觉空间或导航困难为突出表现，可伴生活活动受限。,提示后部皮质受累或视觉空间主导型认知障碍评估场景，需要影像学和鉴别诊断。,High
+AD_COMBO_008,behavioral_symptoms=1; executive_dysfunction=1; early prominent behavioral change,患者早期以行为改变和执行功能下降为主。,需要考虑额颞叶痴呆等鉴别诊断，典型AD判断应谨慎。,High
+AD_COMBO_009,attention_impairment=1; hallucination=1 or cognitive fluctuation=1,患者存在注意功能下降，并伴幻觉或认知波动。,需要考虑路易体痴呆、谵妄或其他非典型原因，建议优先处理红旗鉴别。,High
+AD_COMBO_010,stroke_history=1; stepwise_decline=1; executive_dysfunction=1,患者存在卒中史或阶梯式下降，并伴执行功能受损。,需要考虑血管性认知障碍，建议进行脑结构影像和血管危险因素评估。,High
+AD_COMBO_011,rapid_progressive_cognitive_decline=1,患者认知下降进展速度较快。,需优先排除快速进展性痴呆、感染、炎症、代谢或其他神经系统疾病。,Critical
+AD_COMBO_012,functional_decline=3; multidomain impairment likely,患者基本日常生活能力受损，可能存在较重功能依赖。,提示需要评估中重度痴呆阶段及照护需求，同时排查可逆或叠加因素。,High

@@ -1,0 +1,4 @@
+﻿Rule_ID,Clinical_Condition,Priority_Level,Override_Target,Explanation_CN
+AD_REASON_PRI_001,functional_decline >= 2,一级：功能下降优先级最高,覆盖单纯记忆主导型模式；优先输出认知障碍程度及疾病阶段评估方向,患者认知变化已影响日常功能，需要重点评估认知障碍程度及疾病阶段。
+AD_REASON_PRI_002,memory_impairment = 1 AND (executive_dysfunction = 1 OR language_impairment = 1 OR visuospatial_impairment = 1),二级：多领域认知损害,优先于单领域记忆相关模式；输出多认知领域综合评估方向,当前表现涉及多个认知领域，需要综合评估认知损害范围。
+AD_REASON_PRI_003,memory_impairment = 1 AND executive_dysfunction = 0 AND language_impairment = 0 AND visuospatial_impairment = 0 AND functional_decline <= 1,三级：单领域认知表现,输出记忆相关认知改变方向,当前主要表现为记忆相关认知改变。

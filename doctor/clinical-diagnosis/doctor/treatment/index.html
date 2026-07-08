@@ -30,13 +30,10 @@
   <div class="page">
     <header class="top-header">
       <div>
-        <h1>阿尔茨海默病辅助治疗建议</h1>
-        <p>
-          根据患者AD分期、Aβ病理状态和风险因素，综合整理治疗建议、药物参考、风险提醒与随访重点。
-          模块可辅助医生快速查看不同分期下的药物和非药物干预方向，识别抗Aβ治疗、抗凝用药、
-          MRI高风险等需要重点关注的情况，并推荐可直接跳转阅读的相关文献。
-        </p>
+        <h1>阿尔茨海默病辅助治疗建议模块</h1>
+        <p>根据 AD 分期、Aβ 病理状态和风险因素，输出治疗建议、药物参考、风险提醒，并辅助生成文献检索思路。</p>
       </div>
+      <span class="tag">医学信息实习项目</span>
     </header>
 
     <main class="layout">
@@ -44,10 +41,18 @@
       <section class="card input-card">
         <h2>患者情况输入</h2>
 
+        <div class="notice">
+          本模块仅用于课程项目展示和医学信息辅助整理，不替代医生诊断、治疗决策或临床处方。
+        </div>
+
+        <div id="dataStatus" class="file-status">
+          正在读取内置数据表：AD治疗建议数据表_简化版.xlsx
+        </div>
+
         <label class="form-label">
           AD 分期
           <select id="stageSelect">
-            <option value="">正在加载资料...</option>
+            <option value="">正在加载数据表...</option>
           </select>
         </label>
 
@@ -85,7 +90,7 @@
         </label>
 
         <button id="generateBtn" class="primary-btn">生成治疗建议</button>
-        <button id="knowledgeBtn" class="third-btn">推荐相关文献</button>
+        <button id="knowledgeBtn" class="third-btn">生成 LLM 知识检索</button>
         <button id="resetBtn" class="secondary-btn">清空选择</button>
       </section>
 
@@ -113,9 +118,9 @@
         </div>
 
         <div class="card result-card">
-          <h2>相关文献推荐</h2>
+          <h2>LLM 知识获取 / 文献检索助手</h2>
           <div id="knowledgeResult" class="empty-result">
-            点击“推荐相关文献”后，系统会根据当前患者情况筛选文献，并提供可直接跳转的阅读入口。
+            点击“生成 LLM 知识检索”后，系统会根据输入情况生成检索关键词、文献检索入口和可复制给大模型的提示词。
           </div>
         </div>
       </section>
